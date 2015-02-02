@@ -1,0 +1,181 @@
+---
+citation-style: "../lib/pascal.csl"
+references:
+- id: fielding2000rest
+  title: "Architectural Styles and the Design of Network-based Software Architectures"
+  author:
+  - given: Roy Thomas
+    family: Fielding
+  issued: {year: 2000}
+  publisher: "University of California, Irvine"
+  type: thesis
+  genre: "Doctoral dissertation"
+  URL: http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm
+- id: "nodejs"
+  title: "Node.js"
+  author:
+  - family: "Ryan"
+    given: "Dahl"
+  URL: "http://nodejs.org/"
+  issued: {year: 2009}
+  type: "webpage"
+  accessed: {day: 22, month: 9, year: 2014}
+  version: 0.10.32
+- id: "npm"
+  title: "node packaged modules"
+  author:
+  - family: Schlueter
+    given: Isaac Z.
+  URL: "http://npmjs.org/"
+  type: "webpage"
+  accessed: {day: 1, month: 2, year: 2015}
+- id: "expressjs"
+  title: "express.js"
+  URL: "http://expressjs.org/"
+  type: "webpage"
+  accessed: {day: 1, month: 2, year: 2015}
+  version: 4.11.1
+  author:
+  - family: Holowaychuk
+    fiven: TJ
+- id: "postgres"
+  title: "PostgreSQL"
+  URL: "http://postgresql.org/"
+  type: "webpage"
+  accessed: {day: 1, month: 2, year: 2015}
+- id: restify
+  title: "Restify"
+  type: "webpage"
+  URL: "http://mcavage.me/node-restify/"
+  accessed: {day: 1, month: 2, year: 2015}
+  version: 2.8.5
+  author:
+  - family: Cavage
+    given: Mark
+- id: hapi
+  title: "HAPI"
+  type: "webpage"
+  URL: "http://hapijs.com/"
+  version: 8.1.0
+  accessed: {day: 2, month: 2, year: 2015}
+  author:
+  - family: Hammer
+    given: Eran
+- id: koa
+  title: "Koa.js"
+  type: "webpage"
+  URL: "http://koajs.com/"
+  version: 0.16.0
+  author:
+  - {given: TJ, family: Holowaychuk}
+  - {given: Jonathan, family: Ong}
+  - {given: Julian, family: Gruber}
+  - {given: Yiyu, family: He}
+  accessed: {day: 2, month: 2, year: 2015}
+- id: martini
+  title: "Martini"
+  type: "webpage"
+  URL: "http://martini.codegangsta.io/"
+  author:
+  - family: Saenz
+    given: Jeremy
+  version: "1.0.0"
+  accessed: {day: 2, month: 2, year: 2015}
+- id: rails
+  title: "Ruby on Rails"
+  type: "webpage"
+  URL: "http://rubyonrails.org/"
+  version: "4.2.0"
+  author:
+  - family: Hansson
+    given: David Heinemeier
+  accessed: {day: 2, month: 2, year: 2015}
+- id: django
+  title: "Django"
+  type: "webpage"
+  URL: "https://www.djangoproject.com/"
+  version: "1.7.4"
+  author: {family: "Django Software Foundation"}
+  accessed: {day: 2, month: 2, year: 2015}
+- id: laravel
+  title: "Laravel"
+  type: "webpage"
+  URL: "http://laravel.com/"
+  version: "4.2.0"
+  accessed: {day: 2, month: 2, year: 2015}
+  author:
+  - family: Otwell
+    given: Taylor
+- id: bookshelf
+  title: "bookshelf.js"
+  type: "webpage"
+  URL: "http://bookshelfjs.org/"
+  author: {family: Griesser, given: Tim}
+  accessed: {day: 2, month: 2, year: 2015}
+  version: "0.7.9"
+- id: knex
+  title: "knex.js"
+  type: "webpage"
+  URL: "http://knexjs.org/"
+  author: {family: Griesser, given: Tim}
+  accessed: {day: 2, month: 2, year: 2015}
+  version: "0.7.3"
+- id: mocha
+  title: mocha
+  type: "webpage"
+  URL: "http://mochajs.org/"
+  author: {family: Holowaychuk, given: TJ}
+  accessed: {day: 2, month: 2, year: 2015}
+  version: "2.1.0"
+- id: rspec
+  title: RSpec
+  type: "webpage"
+  URL: "http://rspec.info/"
+  author: {family: Baker, given: Steven}
+  accessed: {day: 2, month: 2, year: 2015}
+  version: "3.1.7"
+- id: chai
+  title: Chai
+  type: "webpage"
+  URL: "http://chaijs.com/"
+  author: {given: Jake, family: Luer}
+  accessed: {day: 2, month: 2, year: 2015}
+  version: "1.10.0"
+- id: supertest
+  title: "Supertest"
+  type: "webpage"
+  URL: "https://github.com/tj/supertest"
+  author: {family: Holowaychuk, given: TJ}
+  accessed: {day: 2, month: 2, year: 2015}
+  version: "0.15.0"
+- id: promisesaplus
+  title: Promises/A+
+  URL: http://promisesaplus.com/
+  author:
+  - family: Cavalier
+    given: Brian
+  - family: Denicola
+    given: Domenic
+  issued: {day: 6, month: 12, year: 2012}
+  accessed: {day: 26, month: 9, year: 2014}
+- id: bluebird
+  title: "Bluebird"
+  type: "webpage"
+  URL: "https://github.com/petkaantonov/bluebird"
+  author: {family: Antonov, given: Petka}
+  accessed: {day: 2, month: 2, year: 2015}
+  version: "2.9.5"
+- id: promiseperformance
+  title: "Perfomance of Promise Libraries"
+  type: "webpage"
+  URL: "http://spion.github.io/posts/why-i-am-switching-to-promises.html"
+  author: {family: Kosev, given: Gorgi}
+  accessed: {day: 2, month: 2, year: 2015}
+- id: osslicenses
+  title: "Open Source Licenses"
+  type: "webpage"
+  URL: "http://opensource.org/licenses"
+  accessed: {day: 2, month: 2, year: 2015}
+  abstract: |
+    Open source licenses are licenses that comply with the Open Source Definition — in brief, they allow software to be freely used, modified, and shared. To be approved by the Open Source Initiative (also known as the OSI), a license must go through the Open Source Initiative's license review process.
+---
