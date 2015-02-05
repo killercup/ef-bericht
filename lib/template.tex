@@ -6,19 +6,7 @@ $if(fontfamily)$
 $else$
 \usepackage{lmodern}
 $endif$
-\usepackage{hyperref}
 
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-  $if(euro)$
-    \usepackage{eurosym}
-  $endif$
-\fi
-
-% Farbliche Hervorhebung von Links; gut für das Lesen am Bildschirm,
-% für den Druck weniger geeignet (dann auskommentieren):
-\hypersetup{breaklinks=true,colorlinks=true,urlcolor=blue,linkcolor=blue,citecolor=blue}
 
 % Standard für A4-Papier:
 %\usepackage[a4paper]{geometry}
@@ -28,6 +16,45 @@ $endif$
 
 \usepackage{graphicx}
 \usepackage[ngerman]{babel}
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+
+% Break URLs in a few more places. (For breaking lines, not functionality!)
+% cf. http://tex.stackexchange.com/questions/3033/forcing-linebreaks-in-url
+\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks%  save the current one
+  \do\*\do\-\do\~\do\'\do\"\do\-}
+
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={$author-meta$},
+            pdftitle={$title-meta$},
+            colorlinks=true,
+            citecolor=$if(citecolor)$$citecolor$$else$blue$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  $if(euro)$
+    \usepackage{eurosym}
+  $endif$
+\fi
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
 
 $if(graphics)$
 \usepackage{graphicx}
@@ -128,7 +155,11 @@ $for(include-before)$
 $endfor$
 
 $if(toc)$
+{
+  \hypersetup{linkcolor=black}
+  \setcounter{tocdepth}{$toc-depth$}
   \tableofcontents
+}
 $endif$
 
 $body$

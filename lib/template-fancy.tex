@@ -206,14 +206,15 @@ $endif$
 
 % - - -
 
+$if(graphics)$
 % Linking figures
 \usepackage{caption}
 \let\oldincludegraphics\includegraphics
 
 \renewcommand*{\includegraphics}[1]{\oldincludegraphics{#1}\def\currentfigure{#1}}
+$endif$
 
 \let\oldcaption\caption
-
 \renewcommand*{\caption}[1]{\oldcaption{#1}\label{\currentfigure}}
 
 \renewcommand*{\hyperref}[2][\ar]{%
