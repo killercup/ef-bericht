@@ -1,4 +1,6 @@
 digraph "TheTVDB API Request Cycle" {
+  compound=true;
+
   "Start" [shape=Mdiamond];
   "Reject" [shape=Msquare];
   "Resolve" [shape=Msquare];

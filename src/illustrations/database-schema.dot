@@ -1,0 +1,17 @@
+digraph "EpisodeFever Database Schema" {
+  nodesep = 0.25;
+  concentrate = true;
+  node [shape=record];
+
+  User [label="{USER|<id> id|Name|EMail|Password|Verified|Verification Token|Created At|Updated At}"];
+
+  Show [label="{SHOW|<id> id|Name|Description}"];
+
+  Episode [label="{EPISODE|<id> id|Name|Description|Air Date/Time|<show_id> Show|Season|Number}"];
+  Episode:show_id -> Show:id;
+
+  Vote [label="{VOTE|Rating|<user_id> User|<show_id> Show|<episode_id> Episode}"];
+  Vote:user_id -> User:id;
+  Vote:show_id -> Show:id;
+  Vote:episode_id -> Episode:id;
+}

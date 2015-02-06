@@ -36,8 +36,14 @@ references:
   accessed: {day: 1, month: 2, year: 2015}
   version: 4.11.1
   author:
-  - family: Holowaychuk
-    fiven: TJ
+  - {given: TJ, family: Holowaychuk}
+  - {given: Aaron, family: Heckmann}
+  - {given: Ciaran, family: Jessup}
+  - {given: Douglas Christopher, family: Wilson}
+  - {given: Guillermo, family: Rauch}
+  - {given: Jonathan, family: Ong}
+  - {given: Roman, family: Shtylman}
+  - {given: Young Jae, family: Sim}
 - id: "postgres"
   title: "PostgreSQL"
   URL: "http://postgresql.org/"
@@ -232,4 +238,11 @@ references:
   type: "webpage"
   URL: "http://creativecommons.org/licenses/by/3.0/us/"
   accessed: {day: 6, month: 2, year: 2015}
+- id: replay
+  title: "replay"
+  type: "webpage"
+  URL: "https://github.com/assaf/node-replay"
+  author: {family: Assaf, given: Arkin}
+  accessed: {day: 7, month: 2, year: 2015}
+  version: "1.12.0"
 ---
