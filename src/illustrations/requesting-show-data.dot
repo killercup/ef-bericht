@@ -1,0 +1,44 @@
+digraph "TheTVDB API Request Cycle" {
+  "Start" [shape=Mdiamond];
+  "Reject" [shape=Msquare];
+  "Resolve" [shape=Msquare];
+
+  subgraph clusterSearchTvDb {
+    label = "TheTVDB";
+
+    tvdb_search -> tvdb_results;
+    tvdb_results -> tvdb_result [label="Return first result"];
+    tvdb_result -> tvdb_show;
+
+    tvdb_search [label="Seach by Show Name"];
+    tvdb_results [shape=diamond; label="TheTVDB Search Response"];
+    tvdb_result [label="TheTVDB Show ID"];
+    tvdb_show [label="TheTVDB Show Record"]
+  }
+
+  subgraph clusterSearchTvRage {
+    label = "TVRage";
+
+    tvrage_search -> tvrage_results;
+    tvrage_results -> tvrage_result [label="Return first result"];
+    tvrage_result -> tvrage_show;
+
+    tvrage_search [label="Seach by Show Name"];
+    tvrage_results [shape=diamond; label="TVRage Search Response"];
+    tvrage_result [label="TVRage Show ID"];
+    tvrage_show [label="TVRage Show Record"]
+  }
+
+  "Start" -> "Search" [label="Query: TV Show Name"];
+  "Search" -> tvdb_search;
+  "Search" -> tvrage_search;
+
+  tvdb_results -> "Reject" [label="No results"];
+  tvrage_results -> "Reject" [label="No results"];
+
+  tvdb_show -> "Process Show";
+  tvrage_show -> "Process Show";
+
+  "Process Show" -> "Resolve";
+  "Process Show" -> "Reject" [label="Invalid data"];
+}

@@ -1,6 +1,6 @@
-# Überblick über die verwendeten Technologien
+# Überblick über die verwendeten Technologien {#sec:technologien}
 
-Jede im weiteren Verlauf erwähnte Software ist unter einer OpenSource-Lizenz verfügbar (vgl. [@osslicenses]).
+Falls nichte explizit erwähnt, ist jede im weiteren Verlauf erwähnte Software ist unter einer OpenSource-Lizenz verfügbar (vgl. [@osslicenses]).
 
 Als Software-Plattform wurde _node.js_ [@nodejs] gewählt[^node-alternativen], welches JavaScript-Applikationen ausführt und Zugriff auf System-Schnittstellen bietet. Da es auf Basis eines Event-Loop arbeitet, geschieht jeglicher Zugriff auf System-Ressourcen wie Dateisystem oder Netzwerk asynchron. Es sind sehr viele mit _node.js_ geschriebene Bibliotheken über _npm_ [@npm] verfügbar, welche leicht in eigene Software integriert werden können.
 

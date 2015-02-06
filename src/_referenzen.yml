@@ -142,7 +142,7 @@ references:
   accessed: {day: 2, month: 2, year: 2015}
   version: "1.10.0"
 - id: supertest
-  title: "Supertest"
+  title: "SuperTest"
   type: "webpage"
   URL: "https://github.com/tj/supertest"
   author: {family: Holowaychuk, given: TJ}
@@ -178,4 +178,58 @@ references:
   accessed: {day: 2, month: 2, year: 2015}
   abstract: |
     Open source licenses are licenses that comply with the Open Source Definition — in brief, they allow software to be freely used, modified, and shared. To be approved by the Open Source Initiative (also known as the OSI), a license must go through the Open Source Initiative's license review process.
+- id: thetvdb
+  title: "TheTVDB"
+  type: "webpage"
+  accessed: {day: 5, month: 2, year: 2015}
+  URL: "http://thetvdb.com/"
+  author:
+  - {given: Josh, family: Walters}
+  - {given: Scott, family: Zsori}
+  - {given: Paul, family: Taylor}
+- id: tvrage
+  title: "TVRage"
+  type: "webpage"
+  accessed: {day: 5, month: 2, year: 2015}
+  URL: "http://tvrage.com/"
+  author:
+  - {given: Kimberly, family: Ainsworth}
+  - {given: Ben, family: Drummond}
+  - {given: Rachel, family: Anne}
+  - {given: Van, family: Troughton}
+- id: xml2js
+  title: "xml2js"
+  type: "webpage"
+  URL: "https://github.com/Leonidas-from-XIV/node-xml2js"
+  author: {given: Marek, family: Kubica}
+  accessed: {day: 4, month: 2, year: 2015}
+  version: "0.4.4"
+- id: saxjs
+  title: "sax-js"
+  type: "webpage"
+  URL: "https://github.com/isaacs/sax-js/"
+  author: {given: Isaac Z., family: Schlueter}
+  accessed: {day: 4, month: 2, year: 2015}
+  version: "0.6.1"
+- id: superagent
+  title: "SuperAgent"
+  type: "webpage"
+  URL: "https://github.com/visionmedia/superagent"
+  author: {family: Holowaychuk, given: TJ}
+  accessed: {day: 6, month: 2, year: 2015}
+  version: "0.21.0"
+- id: "local-time"
+  title: "The Long, Painful History of Time"
+  author: {given: Erik, family: Naggum}
+  URL: "http://naggum.no/lugm-time.html"
+  type: "article"
+  issued: {year: 1999, month: 10, day: 11}
+  accessed: {day: 4, month: 2, year: 2015}
+  abstract: |
+    The programming language Common Lisp offers a few functions to support the concept of time as humans experience it, including GET-UNIVERSAL-TIME, ENCODE-UNIVERSAL-TIME, DECODE-UNIVERSAL-TIME, and GET-DECODED-TIME. These functions assume the existence of a timezone and a daylight saving time regime, such that they can support the usual expression of time in the environment in which a small number of real-life applications run. The majority of applications, however, need more support to be able to read and write dates and times, calculate with time, schedule events at specific clock times daily, and work with several time zones and daylight saving time regimes. This paper discusses some of the problems inherent in processing time suitable to humans and describes a solution employed by the author in a number of applications, the LOCAL-TIME concept.
+- id: cc3-by-us
+  title: "Creative Commons Attribution 3.0 United States"
+  type: "webpage"
+  URL: "http://creativecommons.org/licenses/by/3.0/us/"
+  accessed: {day: 6, month: 2, year: 2015}
 ---

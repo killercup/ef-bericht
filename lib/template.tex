@@ -52,6 +52,71 @@ $endif$
   $if(euro)$
     \usepackage{eurosym}
   $endif$
+
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+
+  $if(mainfont)$
+    \setmainfont{$mainfont$}
+  $endif$
+
+  $if(sansfont)$
+    \setsansfont{$sansfont$}
+  $endif$
+
+  $if(monofont)$
+    \setmonofont[Mapping=tex-ansi]{$monofont$}
+  $endif$
+
+  $if(mathfont)$
+    \setmathfont(Digits,Latin,Greek){$mathfont$}
+  $endif$
+\fi
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+
+% Break URLs in a few more places. (For breaking lines, not functionality!)
+% cf. http://tex.stackexchange.com/questions/3033/forcing-linebreaks-in-url
+\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks%  save the current one
+  \do\*\do\-\do\~\do\'\do\"\do\-}
+
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={$author-meta$},
+            pdftitle={$title-meta$},
+            colorlinks=true,
+            citecolor=$if(citecolor)$$citecolor$$else$blue$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  $if(euro)$
+    \usepackage{eurosym}
+  $endif$
 \fi
 
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
@@ -118,6 +183,10 @@ $endif$
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 \usetikzlibrary{shapes,trees}
+
+\renewcommand*{\hyperref}[2][\ar]{%
+  \def\ar{#2}
+  #2 (\autoref{#1})}
 
 \usepackage[font={footnotesize,sf}]{caption}
 

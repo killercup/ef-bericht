@@ -8,4 +8,6 @@ lang: german
 locale: de
 documentclass: article
 papersize: a4paper
+links-as-notes: true
+toc-depth: 2
 ---
