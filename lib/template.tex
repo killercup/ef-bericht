@@ -2,9 +2,9 @@
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
 
 $if(fontfamily)$
-\usepackage{$fontfamily$}
+  \usepackage{$fontfamily$}
 $else$
-\usepackage{lmodern}
+  \usepackage{lmodern}
 $endif$
 
 
@@ -46,13 +46,16 @@ $endif$
             pdfborder={0 0 0}}
 \urlstyle{same}  % don't use monospace font for urls
 
+\renewcommand*{\hyperref}[2][\ar]{%
+  \def\ar{#2}%
+  #2 (\autoref{#1})}
+
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   $if(euro)$
     \usepackage{eurosym}
   $endif$
-
 \else % if luatex or xelatex
   \ifxetex
     \usepackage{mathspec}
@@ -87,79 +90,49 @@ $endif$
 % use microtype if available
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
 
-\ifxetex
-  \usepackage[setpagesize=false, % page size defined by xetex
-              unicode=false, % unicode breaks when used with xetex
-              xetex]{hyperref}
-\else
-  \usepackage[unicode=true]{hyperref}
-\fi
-
-% Break URLs in a few more places. (For breaking lines, not functionality!)
-% cf. http://tex.stackexchange.com/questions/3033/forcing-linebreaks-in-url
-\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks%  save the current one
-  \do\*\do\-\do\~\do\'\do\"\do\-}
-
-\hypersetup{breaklinks=true,
-            bookmarks=true,
-            pdfauthor={$author-meta$},
-            pdftitle={$title-meta$},
-            colorlinks=true,
-            citecolor=$if(citecolor)$$citecolor$$else$blue$endif$,
-            urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
-            linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
-            pdfborder={0 0 0}}
-\urlstyle{same}  % don't use monospace font for urls
-
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-  $if(euro)$
-    \usepackage{eurosym}
-  $endif$
-\fi
-
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-
 $if(graphics)$
-\usepackage{graphicx}
-\makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+  \usepackage{graphicx}
+  \makeatletter
+  \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+  \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+  \makeatother
+  % Scale images if necessary, so that they will not overflow the page
+  % margins by default, and it is still possible to overwrite the defaults
+  % using explicit options in \includegraphics[width, height, ...]{}
+  \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 $endif$
 
 $if(listings)$
-\usepackage{listings}
-% Setup of Code Highlighting
-% cf. http://tex.stackexchange.com/a/179956/21830
-\usepackage{xcolor}
-\lstset{
-    basicstyle=\ttfamily,
-    numbers=left,
-    keywordstyle=\color[rgb]{0.13,0.29,0.53}\bfseries,
-    stringstyle=\color[rgb]{0.31,0.60,0.02},
-    commentstyle=\color[rgb]{0.56,0.35,0.01}\itshape,
-    numberstyle=\footnotesize,
-    stepnumber=5,
-    numbersep=5pt,
-    backgroundcolor=\color[RGB]{248,248,248},
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
-    tabsize=2,
-    captionpos=b,
-    breaklines=true,
-    breakatwhitespace=true,
-    breakautoindent=true,
-    escapeinside={\%*}{*)},
-    linewidth=\textwidth,
-    basewidth=0.5em,
-}
+  \usepackage{listings}
+  % Setup of Code Highlighting
+  % cf. http://tex.stackexchange.com/a/179956/21830
+  \usepackage{xcolor}
+  \lstset{
+      basicstyle=\ttfamily,
+      numbers=left,
+      keywordstyle=\color[rgb]{0.13,0.29,0.53}\bfseries,
+      stringstyle=\color[rgb]{0.31,0.60,0.02},
+      commentstyle=\color[rgb]{0.56,0.35,0.01}\itshape,
+      numberstyle=\footnotesize,
+      stepnumber=5,
+      numbersep=5pt,
+      backgroundcolor=\color[RGB]{248,248,248},
+      showspaces=false,
+      showstringspaces=false,
+      showtabs=false,
+      tabsize=2,
+      captionpos=b,
+      breaklines=true,
+      breakatwhitespace=true,
+      breakautoindent=true,
+      escapeinside={\%*}{*)},
+      linewidth=\textwidth,
+      basewidth=0.5em,
+  }
+$endif$
+
+$if(highlighting-macros)$
+  $highlighting-macros$
 $endif$
 
 $if(verbatim-in-note)$
@@ -183,10 +156,6 @@ $endif$
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 \usetikzlibrary{shapes,trees}
-
-\renewcommand*{\hyperref}[2][\ar]{%
-  \def\ar{#2}
-  #2 (\autoref{#1})}
 
 \usepackage[font={footnotesize,sf}]{caption}
 

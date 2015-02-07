@@ -139,7 +139,7 @@ img {
 q { quotes: "“" "”" "‘" "’"; }
 
 [lang=de] q {
-  quotes: "»" "«" "›" "‹";
+  quotes: "\00bb" "\00ab" "\203A" "\2039";
 }
 
 blockquote,
@@ -251,12 +251,12 @@ img {
 figure {
   display: block;
   text-align: center;
-  margin: 1em 0;
+  margin: 2em 0;
 }
 
 figure img {
   border: none;
-  margin: 0 auto;
+  margin: 0 auto 1em;
 }
 
 figcaption {

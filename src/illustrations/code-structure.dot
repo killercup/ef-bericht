@@ -1,0 +1,55 @@
+digraph "Code Struktur" {
+  node [shape=rectangle];
+  rankdir = LR;
+  compound = true;
+  ratio = 0.6;
+
+  {
+    rank = same;
+    db [label="Database configuration"];
+    server [label="Server"];
+    import [label="Data import"];
+  }
+
+  {
+    rank = same;
+    apis [label="APIs"];
+    api_tests [label="API Tests"];
+  }
+
+  import -> {apis, api_tests};
+
+  {
+    rank = same;
+    helpers [label="Helpers"];
+    services [label="Services"];
+  }
+
+
+  server -> {helpers, services};
+
+  {
+    rank = same;
+    auth [label="Authorization"];
+    users [label="Users"];
+    shows [label="Shows"];
+    episodes [label="Episodes"];
+    votes [label="Votes"];
+  }
+
+  services -> {auth, users, shows, episodes, votes};
+
+  subgraph clusterService {
+    label = "Service";
+    labeljust = r;
+    style = filled;
+    color = lightgrey;
+    node [style=filled, color=white];
+
+    "model.js";
+    "index.js";
+    "tests.js";
+  }
+
+  {users, shows, episodes, votes} -> "model.js" [lhead=clusterService];
+}

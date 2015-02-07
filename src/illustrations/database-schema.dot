@@ -1,16 +1,24 @@
 digraph "EpisodeFever Database Schema" {
-  nodesep = 0.25;
-  concentrate = true;
   node [shape=record];
+  rankdir = RL;
+  size = "7.0,3.5";
+  ratio = fill;
+  margin = 0.1;
 
-  User [label="{USER|<id> id|Name|EMail|Password|Verified|Verification Token|Created At|Updated At}"];
+  {
+    rank = same;
 
-  Show [label="{SHOW|<id> id|Name|Description}"];
+    User [label="USER|<id> id|Name|EMail|Password|Verified|Verification token|Created at|Updated at"];
 
-  Episode [label="{EPISODE|<id> id|Name|Description|Air Date/Time|<show_id> Show|Season|Number}"];
+    Show [label="SHOW|<id> id|Name|Description|Running?|TheTVDB ID|TVRage ID|Poster|Wallpaper|Created at|Updated at"];
+  }
+
+  Episode [label="EPISODE|<id> id|Name|Description|Air date/time|<show_id> Show|Season|Number|Created at|Updated at"];
+
+  Vote [label="VOTE|Rating|<user_id> User|<show_id> Show|<episode_id> Episode|Created at|Updated at"];
+
   Episode:show_id -> Show:id;
 
-  Vote [label="{VOTE|Rating|<user_id> User|<show_id> Show|<episode_id> Episode}"];
   Vote:user_id -> User:id;
   Vote:show_id -> Show:id;
   Vote:episode_id -> Episode:id;

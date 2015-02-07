@@ -25,19 +25,17 @@ APPEND_NEWLINES ?= sed -i '' -n p *.md
 all: clean html pdf
 
 html:
-	cp $(CSS) $(OUTPUT_FOLDER)/style.css; \
-	cp -R $(INPUT_FOLDER)/illustrations $(OUTPUT_FOLDER); \
 	cd $(INPUT_FOLDER); \
 	$(APPEND_NEWLINES); \
 	$(PANDOC) $(INPUT_FOLDER)/*.yml $(INPUT_FOLDER)/*.md \
 	--from=$(MARKDOWN_OPTIONS) \
 	--smart --html-q-tags --section-divs \
 	--number-sections --variable numberedSections=true \
-	--mathjax \
+	--self-contained \
 	--highlight-style=tango \
 	--default-image-extension=svg --table-of-contents \
 	$(FILTER_OPTIONS) \
-	--template=$(HTML_TEMPLATE) --css=style.css --standalone \
+	--template=$(HTML_TEMPLATE) --css=$(CSS) --standalone \
 	--to=html5 --output=$(OUTPUT_FOLDER)/index.html; \
 	echo "HTML done"
 

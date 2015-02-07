@@ -1,4 +1,4 @@
-## Import von Daten
+## Import von Daten {#sec:import}
 
 Informationen zu TV-Serien und deren Episoden sind von verschiedenen Diensten verfügbar. Ein wichtiger Teil des Episode-Fever-Projektes ist es, diese Informationen abzufragen und in der lokalen Datenbank so zu speichern, dass die restliche Anwendung effizient darauf zugreifen kann.
 
@@ -8,7 +8,7 @@ Außerdem bietet TheTVDB eine XML-API, mit der es möglich ist, nach Serien zu s
 
 [^cc3-by-us]: "Creative Commons Attribution 3.0 United States", vgl. @cc3-by-us.
 
-### XML-Daten abfragen und verarbeiten
+### XML-Daten abfragen und verarbeiten {#sec:import-requests}
 
 Um mit der XML-API über HTTP zu kommunizieren, wurde _superagent_ [@superagent] eingesetzt. Basierend auf den von Node mitgelieferten HTTP-Client-Funktionen[^superagent-browser] bietet es eine übersichtliche Schnittstelle zum Erstellen von komplexen HTTP-Requests. Um den Umgang mit asynchronen Funktionen zu vereinfachen, wurde der Prototyp von _superagent_ um die Methode `.exec()` erweitert, welche ein _Promise_ zurückgibt (siehe [verwendete Technologien](#sec:technologien)).
 
@@ -24,10 +24,10 @@ Jede Anfrage zu der TheTVDB-API muss mit einem API-Key versehen werden (als Teil
 
 Um die Daten einer TV-Serie auszulesen, muss zunächst die TVDB-eigene ID dieser Serie gefunden werden. Mit dieser kann dann die URL zu dem gesamten Datensatz der Serie generiert werden. Vergleiche hierzu die Abbildung zu [API-Abfragen](#fig:requesting-show-data).
 
-<figure id="fig:requesting-show-data">
+<section id="fig:requesting-show-data">
 ![Abfragen und Verarbeiten der Daten aus TheTVDB und TVRage\label{fig:requesting-show-data}](illustrations/requesting-show-data)
 
-</figure>
+</section>
 
 Obwohl die Daten der API nun als XML (bzw. JavaScript Objekt) vorliegen, müssen noch eine Transformationen durchgeführt werden, um sie verwenden zu können. So beinhalten einige Felder zwar Zeichenketten, inhaltlich handelt es sich jedoch um Listen von Werten. Das "Genre"-Feld einer Serie kann beispielsweise den Wert `"|Action|Adventure|Comedy|Drama|"` haben.
 
@@ -75,10 +75,10 @@ Dieses Vorgehen hat auch den Vorteil, dass Tests sehr viel schneller laufen und 
 
 _replay_ zeichnet außerdem sehr viele Header auf und speichert den HTTP-Body komprimiert, wenn die ursprüngliche Antwort komprimiert war. Um die Lesbarkeit der Test-Daten zu verbessern, wurden die Daten manuell entpackt, überflüssige Header entfernt und sprechend benannt.
 
-[^external-api-breakage]: Es könnte beispielsweise alle zwei Wochen ein spezieller Test laufen, welcher die Antworten der APIs vergleicht und einen Entwickler benachrichtigt, wenn es Änderungen gibt. Dies ist unter Umständen auch zuverlässiger als z.B. der Blog zu API-Änderungen eines Dienstes.
+[^external-api-breakage]: Es könnte beispielsweise alle zwei Wochen ein spezieller Test laufen, welcher die Antworten der APIs vergleicht und einen Entwickler benachrichtigt, wenn es Änderungen gibt. Dies ist unter Umständen auch zuverlässiger als z.B. ein News-Feed zu API-Änderungen eines Dienstes.
 
-#### Symmetrische Tests für zwei APIs
+#### Tests für zwei APIs
 
-Da zwei kleine Module verwendet werden, um den Zugriff auf die APIs zu abstrahieren, war es möglich, jedem Modul das identische Interface zu geben. Datensätze der APIs werden jedoch nicht speziell vereinheitlicht.
+Da zwei kleine Module verwendet werden, um den Zugriff auf die APIs zu abstrahieren, war es möglich, jedem Modul ein identische Interface zu geben. Die Daten-Strukturen in den Antworten der APIs werden jedoch nicht vereinheitlicht.
 
-Die Tests zu den APIs selbst sind komplett symmetrisch. Alle API-Tests wird unabhängig von der verwendeten API geschrieben und sind Teil einer `testApi`-Funktion. Diese wird mit Test-Daten und einer API-Schnittstelle aufgerufen. So können wir jede API die identischen Tests aufgerufen werden und es ist sichergestellt, dass die Daten auf die selbe Art und Weise verarbeitet werden können.
+Alle API-Tests werden unabhängig von der verwendeten API geschrieben und sind Teil einer `testApi`-Funktion. Diese wird mit Test-Daten und einer API-Schnittstelle aufgerufen. So können mit jeder API die identischen Tests aufgerufen werden und es ist sichergestellt, dass die Daten auf die selbe Art und Weise verarbeitet werden können.

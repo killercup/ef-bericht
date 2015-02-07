@@ -113,6 +113,12 @@
         <text term="issue" form="short"/>
         <number variable="issue" form="numeric"/>
       </group>
+      <group delimiter=" ">
+        <text prefix="ISBN " variable="ISBN"/>
+      </group>
+      <group delimiter=" ">
+        <text variable="DOI"/>
+      </group>
     </group>
   </macro>
   <macro name="title">
@@ -342,11 +348,6 @@
             </group>
           </else>
         </choose>
-        <!-- <choose>
-          <if variable="URL">
-            <text value=" [Online]"/>
-          </if>
-        </choose> -->
       </group>
       <text macro="access"/>
     </layout>

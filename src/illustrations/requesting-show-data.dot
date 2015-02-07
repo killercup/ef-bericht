@@ -1,9 +1,10 @@
 digraph "TheTVDB API Request Cycle" {
-  compound=true;
-
   "Start" [shape=Mdiamond];
-  "Reject" [shape=Msquare];
-  "Resolve" [shape=Msquare];
+  {
+    rank = same;
+    "Reject" [shape=Msquare];
+    "Resolve" [shape=Msquare];
+  }
 
   subgraph clusterSearchTvDb {
     label = "TheTVDB";
@@ -14,6 +15,7 @@ digraph "TheTVDB API Request Cycle" {
 
     tvdb_search [label="Seach by Show Name"];
     tvdb_results [shape=diamond; label="TheTVDB Search Response"];
+    tvdb_results -> "Reject" [label="No results"];
     tvdb_result [label="TheTVDB Show ID"];
     tvdb_show [label="TheTVDB Show Record"]
   }
@@ -27,6 +29,7 @@ digraph "TheTVDB API Request Cycle" {
 
     tvrage_search [label="Seach by Show Name"];
     tvrage_results [shape=diamond; label="TVRage Search Response"];
+    tvrage_results -> "Reject" [label="No results"];
     tvrage_result [label="TVRage Show ID"];
     tvrage_show [label="TVRage Show Record"]
   }
@@ -34,9 +37,6 @@ digraph "TheTVDB API Request Cycle" {
   "Start" -> "Search" [label="Query: TV Show Name"];
   "Search" -> tvdb_search;
   "Search" -> tvrage_search;
-
-  tvdb_results -> "Reject" [label="No results"];
-  tvrage_results -> "Reject" [label="No results"];
 
   tvdb_show -> "Process Show";
   tvrage_show -> "Process Show";

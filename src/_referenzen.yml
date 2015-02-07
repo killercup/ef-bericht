@@ -49,6 +49,22 @@ references:
   URL: "http://postgresql.org/"
   type: "webpage"
   accessed: {day: 1, month: 2, year: 2015}
+  version: 9.4.0
+  author: {family: "The PostgreSQL Global Development Group"}
+- id: mongodb
+  title: "MongoDB"
+  URL: "http://www.mongodb.org/"
+  type: "webpage"
+  accessed: {day: 1, month: 2, year: 2015}
+  version: 2.6.7
+  author: {family: "MongoDB, Inc."}
+- id: mariadb
+  title: "MariaDB"
+  URL: "https://mariadb.org/"
+  type: "webpage"
+  accessed: {day: 8, month: 2, year: 2015}
+  version: 10.0.16
+  author: {family: "MariaDB Foundation"}
 - id: restify
   title: "Restify"
   type: "webpage"
@@ -126,6 +142,14 @@ references:
   author: {family: Griesser, given: Tim}
   accessed: {day: 2, month: 2, year: 2015}
   version: "0.7.3"
+- id: mongoose
+  title: "mongoose"
+  type: "webpage"
+  URL: "http://mongoosejs.com/"
+  author: {given: Guillermo, family: Rauch}
+  accessed: {day: 7, month: 2, year: 2015}
+  version: "3.8.23"
+  abstract: "elegant mongodb object modeling for node.js"
 - id: mocha
   title: mocha
   type: "webpage"
@@ -245,4 +269,30 @@ references:
   author: {family: Assaf, given: Arkin}
   accessed: {day: 7, month: 2, year: 2015}
   version: "1.12.0"
+- id: kleinschmidt2005relationale
+  title-short: "Relationale Datenbanksysteme"
+  title: "Relationale Datenbanksysteme: Eine praktische Einführung"
+  author:
+  - family: Kleinschmidt
+    given: Peter
+  - family: Rank
+    given: Christian
+  issued: {year: 2005}
+  type: book
+  publisher: Springer Verlag
+  ISBN: 3-540-22496-3
+  edition: 3
+- id: elk
+  title: "The Elasticsearch ELK Stack"
+  URL: "http://www.elasticsearch.org/overview/"
+  type: "webpage"
+  author: {family: Elasticsearch}
+  accessed: {day: 8, month: 2, year: 2015}
+- id: vinay2013pragmatic
+  title: "Best Practices for Designing a Pragmatic RESTful API"
+  author: {given: Vinay, family: Sahni}
+  issued: {day: 28, month: 10, year: 2013}
+  URL: "http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api"
+  type: "webpage"
+  accessed: {day: 8, month: 2, year: 2015}
 ---

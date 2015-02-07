@@ -2,7 +2,7 @@
 
 Ziel des Projekts "EpisodeFever" ist es, eine Plattform zur Bewertung von Fernseh-Serien zu erstellen.
 
-Daten über Serien und Episoden sollen von externen Diensten abgefragt bzw. aktualisiert werden. Es soll möglich sein, Benutzer-Konten zu erstellen und zu verwalten, und als Benutzer Zugriff auf bestimmte Daten zu haben und Bewertungen zu Episoden abzugeben.
+Dazu sollen Daten über Serien, Episoden, Benutzer und Bewertungen gespeichert werden. Die Daten über Serien und Episoden sollen von externen Diensten abgefragt bzw. aktualisiert werden. Es soll möglich sein, Benutzer-Konten zu erstellen und zu verwalten, als Benutzer Zugriff auf ausgewählte Daten zu haben und Bewertungen zu Episoden abzugeben.
 
 Im Rahmen des Projekts soll eine JSON-Schnittstelle erstellt werden, über welche die genannten Daten abgefragt und verändert werden können. Diese soll den Prinzipien von REST folgen [@fielding2000rest] und es ermöglichen, dass verschiedene Anwendungen darauf zugreifen.
 
