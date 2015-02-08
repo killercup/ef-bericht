@@ -14,11 +14,11 @@ module.exports = app;
 
 ### Abfragen vieler Einträge
 
-Unter dem relativen Pfad `/` soll eine Liste von Einträgen abgefragt werden können. Standardmäßig sind dies alle Einträge, später wird die Anzahl limitiert und Seiten-weises Abfragen eingeführt. Diese Liste kann je nach Entität mit bestimmten Filtern versehen werden, welche als Teil der URL in Form von Query-Parametern übertragen werden. Für Serien gibt es beispielsweise `show_ids` (eine Komma-getrennte Liste von natürlichen Zahlen), wodurch nur Einträge zurückgegeben werden, deren ID angegeben wurde.
-
-Eine triviale Variante eines solchen Endpunkts könnte so programmiert werden (anschließend an den oben gezeigten Code der `index.js`):
+Unter dem relativen Pfad `/` soll eine Liste von Einträgen abgefragt werden können. Eine triviale Variante eines solchen Endpunkts könnte wie folgt geschrieben werden (anschließend an den oben gezeigten Code der `index.js`):
 
 ```js
+var Show = require('model.js');
+
 app.get('/', function (request, response) {
   Show.query()
   .then(function (shows) {
@@ -40,6 +40,7 @@ Der benötigte Code für den trivialen Endpunkt von oben reduziert sich damit dr
 
 ```js
 var wrapRoute = require('../../helpers/wrap_route');
+var Show = require('model.js');
 
 app.get('/', wrapRoute(function (request) {
   return Show.query();
@@ -48,11 +49,21 @@ app.get('/', wrapRoute(function (request) {
 
 ### HTTP-Antworten bei Fehlerfällen {#sec:http-errors}
 
-Es sollte nicht auf jeden Fehler mit HTTP-Status `500` geantwortet werden, da dieser für `Internal Server Error` steht und daher nur sehr allgemein ist [@vinay2013pragmatic; @fielding2000rest].
-
-Häufige Fehlerfälle, die zusätzlich beachtet werden sollen, und ihre korrekten Status-Codes, sind:
+Es sollte nicht auf jeden Fehler mit HTTP-Status `500` geantwortet werden, da dieser für "Internal Server Error" steht und daher für Fehler steht, deren Ursache nicht genauer durch einen HTTP-Status repräsentiert werden kann. Häufige Fehlerfälle, die zusätzlich beachtet werden sollen, und ihre korrekten Status-Codes, sind [@vinay2013pragmatic; @fielding2000rest]:
 
 - `401`: Keine Zugriffsberechtigung.
 - `404`: Angefragte Ressource konnte nicht gefunden werden.
 - `409`: Daten-Konflikt (beim Erstellen eines neuen Eintrags).
 - `422`: Daten konnten nicht verarbeitet werden (z.B. weil eine Validierung gescheitert ist).
+
+### Filterung und Sortierung
+
+Standardmäßig werden alle Einträge ausgegeben (später wird die Anzahl limitiert und Seiten-weises Abfragen eingeführt). Diese Liste kann je nach Entität mit bestimmten Filtern versehen werden, welche als Teil der URL in Form von Query-Parametern übertragen werden.
+
+Für Serien ist beispielsweise die Abfrage `/?show_ids=4,8,15,16,23,42` möglich, wodurch nur Einträge zurückgegeben werden, deren ID angegeben wurde. Da das Auslesen von Query-Paramtern und Ergänzen der Datenbank-Abfrage um die korrekten Bedingungen für viele Entitäten sehr ähnlich ist, wurden in `server/helpers/query_params.js` einige Hilfsmethoden dazu geschrieben.
+
+### Abfragen eines einzelnen Eintrags
+
+Ähnlich wie die Abfrage nach einer Liste von Einträgen mit bestimmten IDs gestaltet sich auch die Abfrage eines einzelnen Eintrags. Jeder Eintrag ist unter der URL `/:id` verfügbar (wobei `:id` durch die ID des Eintrags ersetzt wird).
+
+Zusätzlich zu den Feldern des Eintrags ist es bei bestimmten Entitäten auch möglich, verwandte Daten anderer Entitäten mit abzufragen, um z.B. eine Serie und die Liste der IDs aller dazugehöriger Episoden abzufragen[^episode-ids]. Diese Daten werden als Teil eines speziellen `link`-Attributs in er JSON-Antwort übertragen (vgl. [@jsonapi]).

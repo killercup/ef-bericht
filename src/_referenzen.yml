@@ -295,4 +295,13 @@ references:
   URL: "http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api"
   type: "webpage"
   accessed: {day: 8, month: 2, year: 2015}
+- id: jsonapi
+  title: "JSON API"
+  abstract: "A standard for building APIs in JSON."
+  issued: {year: 2014, month: 11, day: 25, hour: 22, minute: 03, second: 05}
+  type: "webpage"
+  URL: "http://jsonapi.org/"
+  author:
+  - {given: Steve, family: Klabnik}
+  - {given: Yehuda, family: Katz}
 ---

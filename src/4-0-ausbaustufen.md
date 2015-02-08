@@ -8,4 +8,4 @@ Die Server-Anwendung schreibt Informationen zu jeder gesendeten HTTP-Antwort sow
 
 Um diese Daten analysieren und darstellen zu können, gibt es passende Software, welche teilweise unter einer Open-Source-Lizenz (vgl. [@osslicenses]) verfügbar ist. Ein Beispiel hierfür ist die Kombination aus _Logstash_, _Elasticsearch_ und _Kibana_ ("ELK", [@elk]).
 
-Wird eine Schnittstelle erstellt bzw. konfiguriert, um den Protokoll der EpisodeFever-Anwendung mit _Logstash_ einlesen zu lassen, kann dies die Daten in eine _Elasticsearch_-Datenbank schreiben. Mit _Kibana_ lassen sich diese dann grafisch darstellen und filtern.
+Mit einer angepassten Konfigration sollte es möglich sein, die Protokolle der EpisodeFever-Anwendung mit _Logstash_ einlesen zu lassen und die Daten in eine _Elasticsearch_-Datenbank zu schreiben. Mit _Kibana_ lassen sich diese dann grafisch darstellen, filtern und auswerten.
