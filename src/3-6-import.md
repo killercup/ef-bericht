@@ -25,11 +25,11 @@ Jede Anfrage zu der TheTVDB-API muss mit einem API-Key versehen werden (als Teil
 Um die Daten einer TV-Serie auszulesen, muss zunächst die TVDB-eigene ID dieser Serie gefunden werden. Mit dieser kann dann die URL zu dem gesamten Datensatz der Serie generiert werden. Vergleiche hierzu die Abbildung zu [API-Abfragen](#fig:requesting-show-data).
 
 <section id="fig:requesting-show-data">
-![Abfragen und Verarbeiten der Daten aus TheTVDB und TVRage\label{fig:requesting-show-data}](illustrations/requesting-show-data)
+![Abfragen und Verarbeiten der Daten von TheTVDB und TVRage\label{fig:requesting-show-data}](illustrations/requesting-show-data)
 
 </section>
 
-Obwohl die Daten der API nun als XML (bzw. JavaScript Objekt) vorliegen, müssen noch eine Transformationen durchgeführt werden, um sie verwenden zu können. So beinhalten einige Felder zwar Zeichenketten, inhaltlich handelt es sich jedoch um Listen von Werten. Das "Genre"-Feld einer Serie kann beispielsweise den Wert `"|Action|Adventure|Comedy|Drama|"` haben.
+Obwohl die Daten der API nun als XML (bzw. JavaScript Objekt) vorliegen, müssen noch kleine Transformationen durchgeführt werden, um sie verwenden zu können. So beinhalten einige Felder zwar Zeichenketten, inhaltlich handelt es sich jedoch um Listen von Werten. Das "Genre"-Feld einer Serie kann beispielsweise den Wert `"|Action|Adventure|Comedy|Drama|"` haben.
 
 ### Datum und Zeit einer Episode auslesen
 

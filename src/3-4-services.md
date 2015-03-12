@@ -2,11 +2,11 @@
 
 Einer der ersten Schritte im Projekt-Verlauf war das Implementieren der der JSON-Endpunkte zur Abfrage von Serien und Episoden. Es soll für beide Entitäten eine Liste mit Einträgen sowie einzelne Einträge abgefragt werden können.
 
-Dazu wurden zunächst die zwei _Services_ "shows" und "episodes" erstellt. Wie [oben](#sec:struktur) beschrieben, sind dies Verzeichnisse, welche den möglichst isolierten Code für einen Bereich der Anwendung beinhalten. Für beide _Services_ wurde eine `model.js` erstellt, welche Informationen zur Datenbank-Repräsentation der Daten beschreibt, sowie eine `index.js`, welche die möglichen HTTP-Anfragen beschreibt und einen _express Router_ exportiert.
+Dazu wurden zunächst die zwei _Services_ "shows" und "episodes" erstellt. Wie [oben](#sec:struktur) beschrieben, sind dies Verzeichnisse, welche möglichst isolierten Code für einen Bereich der Anwendung beinhalten. Für beide _Services_ wurde eine `model.js` erstellt, welche Informationen zur Datenbank-Repräsentation der Daten beschreibt, sowie eine `index.js`, welche die möglichen HTTP-Anfragen beschreibt und einen _express Router_ exportiert.
 
 Der initiale Inhalt einer solchen `index.js` sieht so aus:
 
-```js
+```javascript
 var express = require('express');
 var app = express.Router();
 module.exports = app;
@@ -16,8 +16,8 @@ module.exports = app;
 
 Unter dem relativen Pfad `/` soll eine Liste von Einträgen abgefragt werden können. Eine triviale Variante eines solchen Endpunkts könnte wie folgt geschrieben werden (anschließend an den oben gezeigten Code der `index.js`):
 
-```js
-var Show = require('model.js');
+```javascript
+var Show = require('./model.js');
 
 app.get('/', function (request, response) {
   Show.query()
@@ -38,9 +38,9 @@ Um doppelten Code zu vermeiden, wurde die Funktion `wrapRoute` geschrieben (vgl.
 
 Der benötigte Code für den trivialen Endpunkt von oben reduziert sich damit drastisch:
 
-```js
+```javascript
 var wrapRoute = require('../../helpers/wrap_route');
-var Show = require('model.js');
+var Show = require('./model.js');
 
 app.get('/', wrapRoute(function (request) {
   return Show.query();
@@ -66,4 +66,4 @@ Für Serien ist beispielsweise die Abfrage `/?show_ids=4,8,15,16,23,42` möglich
 
 Ähnlich wie die Abfrage nach einer Liste von Einträgen mit bestimmten IDs gestaltet sich auch die Abfrage eines einzelnen Eintrags. Jeder Eintrag ist unter der URL `/:id` verfügbar (wobei `:id` durch die ID des Eintrags ersetzt wird).
 
-Zusätzlich zu den Feldern des Eintrags ist es bei bestimmten Entitäten auch möglich, verwandte Daten anderer Entitäten mit abzufragen, um z.B. eine Serie und die Liste der IDs aller dazugehöriger Episoden abzufragen[^episode-ids]. Diese Daten werden als Teil eines speziellen `link`-Attributs in er JSON-Antwort übertragen (vgl. [@jsonapi]).
+Zusätzlich zu den Feldern des Eintrags ist es bei bestimmten Entitäten auch möglich, verwandte Daten anderer Entitäten mit abzufragen, um z.B. eine Serie und die Liste der IDs aller dazugehöriger Episoden abzufragen. Diese Daten werden als Teil eines speziellen `link`-Attributs in der JSON-Antwort übertragen (vgl. @jsonapi).

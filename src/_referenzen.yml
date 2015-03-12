@@ -304,4 +304,53 @@ references:
   author:
   - {given: Steve, family: Klabnik}
   - {given: Yehuda, family: Katz}
+- id: jasmine
+  title: "Jasmine"
+  type: "webpage"
+  URL: "http://jasmine.github.io/"
+  author:
+  - {given: Christopher, family: Amavisca}
+  - {given: JR, family: Boyens}
+  - {given: Gregg, family: Van Hove}
+  accessed: {day: 8, month: 3, year: 2015}
+  version: "2.2.1"
+- id: vowsjs
+  title: "Vows"
+  type: "webpage"
+  URL: "http://vowsjs.org/"
+  author:
+  - {given: Alexis, family: Sellier}
+  - {given: Charlie, family: Robbins}
+  - {given: Jerry, family: Sievert}
+  accessed: {day: 8, month: 3, year: 2015}
+  version: "0.8.1"
+- id: expectjs
+  title: "expect.js"
+  type: "webpage"
+  URL: "https://github.com/Automattic/expect.js"
+  author:
+  - {given: Guillermo, family: Rauch}
+  accessed: {day: 8, month: 3, year: 2015}
+  version: "0.3.1"
+- id: solis2011study
+  title: "A study of the characteristics of behaviour driven development"
+  container-title: "Software Engineering and Advanced Applications (SEAA), 2011 37th EUROMICRO Conference on"
+  author:
+  - family: Solís
+    given: Carlos
+  - family: Wang
+    given: Xiaofeng
+  page: '383-387'
+  issued: {year: 2011}
+  type: paper-conference
+  publisher: IEEE
+- id: fakerjs
+  title: "faker.js"
+  type: "webpage"
+  URL: "https://github.com/Marak/faker.js"
+  author:
+  - {given: Marak, family: Squires}
+  - {given: Matthew, family: Bergman}
+  accessed: {day: 8, month: 3, year: 2015}
+  version: "2.1.2"
 ---

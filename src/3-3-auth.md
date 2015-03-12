@@ -2,4 +2,4 @@
 
 ### Registrierung
 ### Login
-### Benutz-Daten ändern
+### Benutzer-Daten ändern

@@ -48,7 +48,11 @@ $endif$
 
 \renewcommand*{\hyperref}[2][\ar]{%
   \def\ar{#2}%
-  #2 (\autoref{#1})}
+  #2 (\autoref{#1}, Seite~\pageref{#1})}
+
+\addto\extrasngerman{\def\sectionautorefname{Kapitel}}
+\addto\extrasngerman{\def\subsectionautorefname{Kapitel}}
+\addto\extrasngerman{\def\subsubsectionautorefname{Kapitel}}
 
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
@@ -197,6 +201,7 @@ $if(toc)$
   \hypersetup{linkcolor=black}
   \setcounter{tocdepth}{$toc-depth$}
   \tableofcontents
+  \newpage
 }
 $endif$
 
