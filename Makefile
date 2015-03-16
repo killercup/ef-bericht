@@ -47,7 +47,7 @@ pdf:
 	--default-image-extension=pdf --table-of-contents \
 	--number-sections --variable numberedSections=true \
 	$(FILTER_OPTIONS) \
-	--template=$(LATEX_TEMPLATE) --listings \
+	--template=$(LATEX_TEMPLATE) \
 	--latex-engine=pdflatex \
 	--to=latex --output=$(OUTPUT_FOLDER)/index.$(LATEX_FILETYPE); \
 	echo "PDF done"
