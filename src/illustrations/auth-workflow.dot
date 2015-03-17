@@ -1,0 +1,39 @@
+digraph "Authorization Workflow" {
+  node [shape=plaintext];
+  rankdir = LR;
+
+  // Registration Workflow
+  "Registration Form" -> "Checkit" -> "Check Duplicate Mail-Address" -> "Create New User Record" -> "Send Verification Mail";
+
+  "Click Verification Link" -> "Update User Record";
+
+  "Login Form" -> "Check Existence of Mail-Address" -> "Check for Matching Password" -> "Return Authorization Token";
+
+  {
+    // Client
+    rank = same;
+    "Registration Form" [shape=rectangle];
+    "Click Verification Link" [shape=rectangle];
+    "Login Form" [shape=rectangle];
+
+    edge [style=invis];
+    "Registration Form" -> "Click Verification Link" -> "Login Form";
+  }
+
+  {
+    // Server
+    rank = same;
+    "Checkit";
+    "Check Duplicate Mail-Address";
+    "Check Existence of Mail-Address";
+    "Send Verification Mail";
+    "Return Authorization Token";
+  }
+
+  {
+    // DB
+    rank = same;
+    "Create New User Record";
+    "Check for Matching Password";
+  }
+}

@@ -11,7 +11,7 @@ Die wesentlichen Features, die diese bieten sollte sind unter anderem:
 
 Aufgrund der von _PostgreSQL_ zur Verfügung gestellten Funktionen für die Volltextsuche hat sich unsere Entscheidung, eben dieses Datenbanksystem zu benutzen, als richtig erwiesen, da es all die oben genannten Features, aber auch andere nützliche Features, wie z.B. den Support von Fremdsprachen bietet.
 
-Ein alternatives Systeme für eine dedizierte Volltextsuche ist _ElasticSearch_ [@elasticsearch]. Dies ist ein auf Apache Lucence [@lucence] basierendes NoSQL-System, welches darauf ausgelegt ist, große Mengen an Textdaten zu indexieren und effizent durchsuchbar zu machen.
+Ein alternatives Systeme für eine dedizierte Volltextsuche ist _ElasticSearch_ [@elasticsearch]. Dies ist ein auf Apache Lucence [@lucence] basierendes NoSQL-System, welches darauf ausgelegt ist, große Mengen an Textdaten zu indexieren und effizient durchsuchbar zu machen.
 
 ### Anforderungen an die Suche
 
@@ -68,7 +68,7 @@ ORDER BY
 LIMIT 10;
 ```
 
-Wie man sieht wird der Name, die Season, die Episodennummer, sowie der Name und die ID der Serie zurückgegeben. Dafür werden die Tabellen episodes und shows gejoint.
+Wie man sieht wird der Name, die Season, die Episodennummer, sowie der Name und die ID der Serie zurückgegeben. Dafür werden die Tabellen `episodes` und `shows` gejoint.
 Der interessante Teil ist der `WHERE` und `ORDER BY`-Teil, denn dabei werden die Features der _PostgreSQL_-Volltextsuche in Anspruch genommen:
 
 `to_tsvector([ config regconfig , ] document text)` reduziert Text zu einem `tsvector`, der die Lexeme und deren Position innerhalb des Textes enthält. Ein Lexem ist die "Einheit des Wortschatzes, die die begriffliche Bedeutung trägt" [Duden].
@@ -104,13 +104,13 @@ LIMIT 1;
 ```
 
 Für die Rechtschreibkorrektur haben wir eine Materialized View `unique_lexeme` angelegt, die alle Lexeme aus den Serien und Episoden Tabellen enthält.
-Dafür haben wir die `ts_stat` Funktion von _PostgreSQL_ benutzt, welche Statistiken über jedes einzelne Lexem aus den tsvector Daten zurückgibt.
+Dafür haben wir die `ts_stat` Funktion von _PostgreSQL_ benutzt, welche Statistiken über jedes einzelne Lexem aus den `tsvector`-Daten zurückgibt.
 
 Zusätzlich haben wir die _PostgreSQL_ Extension `pg_trgm` (Trigram) verwendet: Diese stellt uns einige wichtige Funktionen und Operationen zur Verfügung um Wörter auf Ähnlichkeit zu untersuchen.
 Dazu wird ein String in die sogenannten Trigramme zerlegt, diese sind die aufeinanderfolge von 3 Buchstaben aus dem String.
 Die Trigramme von "Trigram" wären also beispielsweise `[Tri],[rig],[igr],[gra],[ram]`, wobei Leerzeichen als Unterstriche dargestellt werden.
 
-#### Der `%`-Operator und die Similarity-Funktion
+#### Der `%`-Operator und die `similarity`-Funktion
 
 Der `%`-Operator untersucht, ob die Ähnlichkeit von 2 Argumenten über einem bestimmten Wert liegt (Default: `0.3`) und gibt, falls dem so ist true zurück.
 Similarity gibt eine Zahl zurück, wie Ähnlich 2 Argumente sind, wobei `0` keine Ähnlichkeit entspricht und `1`, dass sie identisch sind.
@@ -119,17 +119,17 @@ Wir benutzen beide, da wir zum einen, einen Index benutzen und dieser mit dem `%
 Similarity als Post-Filter bei dem wir die Ergebnisse vom `%`-Operator nochmal filtern.
 
 
-### Suchindezes
+### Such-Indizes
 
-Um die Laufzeit der SQL-Abfragen drastisch zu verringern, stellt _PostgreSQL_ sogenannte Indezes zur Verfügung. Diese sind sozusagen eine Verknüpfung oder eine Art Lesezeichen, auf die bei der Indexerstellung definierte Spalte einer Tabelle.
+Um die Laufzeit der SQL-Abfragen drastisch zu verringern, stellt _PostgreSQL_ sogenannte Indizes zur Verfügung. Diese sind sozusagen eine Verknüpfung oder eine Art Lesezeichen, auf die bei der Indexerstellung definierte Spalte einer Tabelle.
 
-Dabei gibt es 2 Arten von Indezes: Den GIN und GiST Index.
+Dabei gibt es 2 Arten von Indizes: Den GIN und GiST Index.
 
 > "As a rule of thumb, GIN indexes are best for static data because lookups are faster. For dynamic data, GiST indexes are faster to update. Specifically, GiST indexes are very good for dynamic data and fast if the number of unique words (lexemes) is under 100,000, while GIN indexes will handle 100,000+ lexemes better but are slower to update."
 >
 > – [PostgreSQL Dokumentation zu _Full Text Search_](http://www.postgresql.org/docs/9.4/static/textsearch-indexes.html)
 
-Da die Serien- und Episoden-Daten zum größten Teil statisch sind, eine niedrige Laufzeit der Queries für uns wichtig ist und die GiST Indezes auch falsche Ergebnisse liefern können, haben wir entschieden, die GIN-Indezes sowohl für die Suche nach Serien/Episoden, als auch für die Rechtschreibkorrektur zu verwenden.
+Da die Serien- und Episoden-Daten zum größten Teil statisch sind, eine niedrige Laufzeit der Queries für uns wichtig ist und die GiST Indizes auch falsche Ergebnisse liefern können, haben wir entschieden, die GIN-Indizes sowohl für die Suche nach Serien/Episoden, als auch für die Rechtschreibkorrektur zu verwenden.
 
 
 ### Idee und Umsetzung {#sec:search-ideas}
