@@ -353,4 +353,56 @@ references:
   - {given: Matthew, family: Bergman}
   accessed: {day: 8, month: 3, year: 2015}
   version: "2.1.2"
+- id: checkit
+  type: "webpage"
+  title: bcrypt
+  version: "0.5.1"
+  author: {given: Tim, family: Griesser}
+  accessed: {day: 16, month: 3, year: 2015}
+  URL: https://github.com/tgriesser/checkit
+- id: bcrypt
+  type: "webpage"
+  title: bcrypt
+  version: "0.8.1"
+  author: {given: Nick, family: Campbell}
+  accessed: {day: 16, month: 3, year: 2015}
+  URL: https://github.com/ncb000gt/node.bcrypt.js
+- id: jsonwebtoken
+  type: "webpage"
+  title: jsonwebtoken
+  version: "4.2.0"
+  author: {family: "Auth0, Inc."}
+  accessed: {day: 16, month: 3, year: 2015}
+  URL: https://github.com/auth0/node-jsonwebtoken
+- id: authCryptPaper
+  title: "Improving user authentication on the web: Protected login, strong sessions, and identity federation"
+  author: {given: Mike, family: Dietz}
+  issued: {year: 2014}
+  publisher: "Rice University"
+  type: thesis
+  genre: "Doctoral dissertation"
+  URL: https://scholarship.rice.edu/bitstream/handle/1911/76484/Dissertation_final.pdf?sequence=1
+- id: passport
+  type: "webpage"
+  title: passport
+  version: "0.2.1"
+  author: {given: Jared, family: Hanson}
+  accessed: {day: 16, month: 3, year: 2015}
+  URL: http://passportjs.org/
+- id: elasticsearch
+  title: ElasticSearch
+  type: webpage
+  URL: "https://www.elastic.co/products/elasticsearch"
+  version: "1.4.4"
+  author:
+  - {given: Shay, family: Banon}
+  - {family: Elasticsearch BV}
+  accessed: {day: 16, month: 3, year: 2015}
+- id: lucence
+  title: "Apache Lucence"
+  type: webpage
+  URL: "http://lucene.apache.org/"
+  version: "5.0.0"
+  author: {family: The Apache Software Foundation}
+  accessed: {day: 16, month: 3, year: 2015}
 ---
