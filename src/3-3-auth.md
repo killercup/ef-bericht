@@ -8,10 +8,6 @@ Dafür ist der _Auth_ Service zuständig, der im wesentlichen die folgenden Modu
 - *Login.* Das Anmelden mit dem der E-Mail Adresse. Wobei der Benutzer bei erfolgreicher Anmeldung einen Session Token bekommt.
 - *Verify.* Die Sessionverwaltung, die sicherstellt, dass der Benutzer einen validen Sessiontoken bekommt, vorausgesetzt der Benutzer ist verifiziert.
 
-Im folgenden Schaubild sieht man wie die Kommunikation bei der Authentifizierung zwischen dem Client, dem Server und der Datenbank abläuft.
-
-[BILD]
-
 Nachfolgend ein detailierter Einblick in die einzelnen Module.
 
 ### Registrierung
@@ -50,16 +46,14 @@ Damit ist der Anmeldeprozess abgeschlossen.
 
 ### Verifizierung
 
-Die Verifizierungsfunktionalität wurde bereits bei der Planung vorgesehen, da wir sicherstellen wollten, dass die bei der Registrierung eingegebenen E-Mail Adressen auch wirklich existieren und der Benutzer dies durch das klicken auf einen Verifizierungslink bestätigt.
-
-Wir sahen diese Funktionalität deshalb als wichtig an, da wir die Erstellung von Spam-Accounts einschränken wollten.
+Die Verifizierung wurde bereits bei der Planung vorgesehen, da wir sicherstellen wollten, dass die bei der Registrierung eingegebenen E-Mail-Adressen auch wirklich existieren und der Benutzer dies durch das Klicken auf einen Verifizierungslink bestätigt. Wir sahen diese Funktionalität deshalb als wichtig an, da wir die Erstellung von Spam-Accounts einschränken wollten.
 
 Die Verifizierung läuft wie folgt ab.
 
-Wie bereits vorher erläutert wurde beim registrieren ein Verifizierungstoken erstellt und in der Datenbank abgelegt.
-Dieser Token wird dann mithilfe der JWT Library _jsonwebtoken_ [@jsonwebtoken] in ein sogenanntes JSON Webtoken konvertiert. Dieses ist ein verschlüsselter Token der aus einem JSON Objekt erzeugt wird, dass den zuvor generierten Token und die ID des Benutzers enthält. Der JWT wird dann an die vom Benutzer eingegebene E-Mail in Form eines Verifizierungslinks gesendet.
+Wie bereits vorher erläutert, wurde beim Registrieren ein Verifizierungs-Token erstellt und in der Datenbank abgelegt.
+Dieser Token wird dann mithilfe der Library _jsonwebtoken_ [@jsonwebtoken] in einen sogenannten JSON-Web-Token (JWT) konvertiert (eine serialisierte und kryptografisch signierte From eines JSON-Objektes), welcher den zuvor generierten Verifizierungs-Token und die ID des Benutzers enthält. Der JWT wird dann an die vom Benutzer eingegebene E-Mail in Form eines Verifizierungslinks gesendet.
 
-Zum versenden der E-Mail haben wir die Nodemailer Library benutzt, weil diese sehr leicht zu implementieren war und viele Funktionalitäten bot.
+Zum Versenden der E-Mail haben wir die _Nodemailer_-Library [@nodemailer] benutzt, weil diese sehr leicht zu implementieren war und viele Funktionalitäten bot (um beispielsweile mit externen Mailling-Anbietern wie [_Sendgrid_](https://sendgrid.com/) zu kommunizieren, welche neben SMTP auch weitere Funktionen über eine REST-API bieten).
 
-Beim Aufruf des Verifizierungslinks dekodieren wir zuerst den JWT, extrahieren daraus die Benutzer ID und den Verifizierungstoken und überprüfen ob die Daten in valider Form vorliegen.
+Beim Aufruf des Verifizierungslinks dekodieren wir zuerst den JWT, extrahieren daraus die Benutzer ID und den Verifizierungstoken und überprüfen, ob die Daten in valider Form vorliegen.
 Dann überprüfen wir, ob der Benutzer bereits verifiziert ist und ob der extrahierte Token mit dem Token in der Datenbank übereinstimmen. Falls der Benutzer nicht bereits verifiziert und der Token korrekt ist, wird der Benutzer verifiziert und die Verifizierung ist abgeschlossen.

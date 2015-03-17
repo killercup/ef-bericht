@@ -81,13 +81,13 @@ Der interessante Teil ist der `WHERE` und `ORDER BY`-Teil, denn dabei werden die
 
 DEr `@@` Operator überprüft, ob `tsvector` und `tsquery` übereinstimmen und liefert `true` oder `false`.
 
-Beispiel                                                      Ergebnis
-------------------------------------------------------------  ----------------------
-`to_tsvector('english', 'The Fat Rats')`                      `'fat':2 'rat':3`
-`to_tsquery('english', 'The & Fat & Rats')`                   `'fat' & 'rat'`
-`setweight('fat:2,4 cat:3 rat:5B'::tsvector, 'A')`            `'cat':3A 'fat':2A,4A 'rat':5A`
-`ts_rank(textsearch, query)`                                  `0.818`
-`to_tsvector('fat cats ate rats') @@ to_tsquery('cat & rat')` `t`
+Beispiel                                                          Ergebnis
+----------------------------------------------------------------  ----------------------
+`to_tsvector('english', 'The Fat Rats')`                          `'fat':2 'rat':3`
+`to_tsquery('english', 'The & Fat & Rats')`                       `'fat' & 'rat'`
+`setweight('fat:2,4 cat:3 rat:5B'::tsvector, 'A')`                `'cat':3A 'fat':2A,4A 'rat':5A`
+`ts_rank(textsearch, query)`                                      `0.818`
+`to_tsvector('fat cats ate rats') @@ to_tsquery('cat & rat')`     `t`
 
 Die Episoden-Namen und -Beschreibungen werden zu `tsvector` umgewandelt, gewichtet und mit `tsquery` untersucht.
 Anschließend werden die Ergebnisse nach Relevanz absteigend sortiert, sodass das Ergebnis mit dem höchsten Rang als erstes ausgegeben wird.
