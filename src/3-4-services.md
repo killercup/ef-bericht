@@ -67,3 +67,11 @@ Für Serien ist beispielsweise die Abfrage `/?show_ids=4,8,15,16,23,42` möglich
 Ähnlich wie die Abfrage nach einer Liste von Einträgen mit bestimmten IDs gestaltet sich auch die Abfrage eines einzelnen Eintrags. Jeder Eintrag ist unter der URL `/:id` verfügbar (wobei `:id` durch die ID des Eintrags ersetzt wird).
 
 Zusätzlich zu den Feldern des Eintrags ist es bei bestimmten Entitäten auch möglich, verwandte Daten anderer Entitäten mit abzufragen, um z.B. eine Serie und die Liste der IDs aller dazugehöriger Episoden abzufragen. Diese Daten werden als Teil eines speziellen `link`-Attributs in der JSON-Antwort übertragen (vgl. @jsonapi).
+
+### Zukünftige Episoden als Kalender-Feed
+
+Bisher liefert die Applikation auf jede Anfrage JSON-Daten zurück. Dies ist praktisch, wenn die Daten von einer Anwendung gelesen werden, die an EpisodeFever angepasst wurde (z.B. ein HTML5-basiertes Frontend für EpisodeFever). Auf Grund der [beim Import ermittelten](#sec:import-times) genauen Zeit-Informationen ist aber gerade bei den Episoden-Daten auch noch ein anderes Format sinnvoll: Kalender-Feeds (_ics_- bzw. _iCal_-Format).
+
+Ein Benutzer kann einen solchen Feed in sein Kalender-Programm (z.B. _Google Calendar_ oder _Kalender_ von OS X) und erhält so die Termine zukünftiger Episoden der von ihm betrachteten Serien.
+
+Das _ics_-Format ist ein Text-Format, welches _Events_ (Termine) in Zeilenblöcken anhand von bestimmten Attributen beschreibt. Da es ein sehr verbreitetes Format ist (**s. Standard**), gibt es eine Reihe von Libraries, welche dieses aus JSON-Daten erzeugen können. Eine, welche sehr umfangreich ist, aktiv entwickelt wird und außerdem explizit Unterstützung für Zeitzonen bieten, ist _cozy-ical_ [@cozyical].

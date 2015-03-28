@@ -31,7 +31,7 @@ Um die Daten einer TV-Serie auszulesen, muss zunächst die TVDB-eigene ID dieser
 
 Obwohl die Daten der API nun als XML (bzw. JavaScript Objekt) vorliegen, müssen noch kleine Transformationen durchgeführt werden, um sie verwenden zu können. So beinhalten einige Felder zwar Zeichenketten, inhaltlich handelt es sich jedoch um Listen von Werten. Das "Genre"-Feld einer Serie kann beispielsweise den Wert `"|Action|Adventure|Comedy|Drama|"` haben.
 
-### Datum und Zeit einer Episode auslesen
+### Datum und Zeit einer Episode auslesen {#sec:import-times}
 
 Des Weiteren ist das Verarbeiten von Datumsformaten notwendig. Ziel ist es, jeder Episode sowohl Datum als auch Uhrzeit zuzuordnen, wann sie (zuerst) ausgestrahlt wurde. Dies ermöglicht es insbesondere, zukünftige Episoden abzufragen, z.B. um einen Kalender zu implementieren und Benutzer im Voraus zu benachrichtigen.
 
