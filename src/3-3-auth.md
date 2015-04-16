@@ -8,6 +8,11 @@ Dafür ist der _Auth_ Service zuständig, der im wesentlichen die folgenden Modu
 - *Login.* Das Anmelden mit dem der E-Mail Adresse. Wobei der Benutzer bei erfolgreicher Anmeldung einen Session Token bekommt.
 - *Verify.* Die Session-Verwaltung, die sicherstellt, dass der Benutzer einen validen Session-Token bekommt, vorausgesetzt der Benutzer ist verifiziert.
 
+<section id="fig:auth-workflow">
+![Authorisierungs-Ablauf\label{fig:auth-workflow}](illustrations/auth-workflow)
+
+</section>
+
 Nachfolgend ein detaillierter Einblick in die einzelnen Module.
 
 ### Registrierung

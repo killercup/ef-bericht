@@ -5,7 +5,9 @@ digraph "Authorization Workflow" {
   // Registration Workflow
   "Registration Form" -> "Checkit" -> "Check Duplicate Mail-Address" -> "Create New User Record" -> "Send Verification Mail";
 
-  "Click Verification Link" -> "Update User Record";
+  "Send Verification Mail" -> "Click Verification Link";
+
+  "Click Verification Link" -> "Check for Correct Token" -> "Update User Record";
 
   "Login Form" -> "Check Existence of Mail-Address" -> "Check for Matching Password" -> "Return Authorization Token";
 
@@ -27,6 +29,7 @@ digraph "Authorization Workflow" {
     "Check Duplicate Mail-Address";
     "Check Existence of Mail-Address";
     "Send Verification Mail";
+    "Check for Correct Token"
     "Return Authorization Token";
   }
 
@@ -34,6 +37,7 @@ digraph "Authorization Workflow" {
     // DB
     rank = same;
     "Create New User Record";
+    "Update User Record"
     "Check for Matching Password";
   }
 }

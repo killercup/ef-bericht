@@ -3,9 +3,7 @@ citation-style: "../lib/pascal.csl"
 references:
 - id: fielding2000rest
   title: "Architectural Styles and the Design of Network-based Software Architectures"
-  author:
-  - given: Roy Thomas
-    family: Fielding
+  author: {given: Roy Thomas, family: Fielding}
   issued: {year: 2000}
   publisher: "University of California, Irvine"
   type: thesis
@@ -13,9 +11,7 @@ references:
   URL: http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm
 - id: "nodejs"
   title: "Node.js"
-  author:
-  - family: "Ryan"
-    given: "Dahl"
+  author: {family: "Ryan", given: "Dahl"}
   URL: "http://nodejs.org/"
   issued: {year: 2009}
   type: "webpage"
@@ -23,9 +19,7 @@ references:
   version: 0.10.32
 - id: "npm"
   title: "node packaged modules"
-  author:
-  - family: Schlueter
-    given: Isaac Z.
+  author: {family: Schlueter, given: Isaac Z.}
   URL: "http://npmjs.org/"
   type: "webpage"
   accessed: {day: 1, month: 2, year: 2015}
@@ -71,18 +65,14 @@ references:
   URL: "http://mcavage.me/node-restify/"
   accessed: {day: 1, month: 2, year: 2015}
   version: 2.8.5
-  author:
-  - family: Cavage
-    given: Mark
+  author: {family: Cavage, given: Mark}
 - id: hapi
   title: "HAPI"
   type: "webpage"
   URL: "http://hapijs.com/"
   version: 8.1.0
   accessed: {day: 2, month: 2, year: 2015}
-  author:
-  - family: Hammer
-    given: Eran
+  author: {family: Hammer, given: Eran}
 - id: koa
   title: "Koa.js"
   type: "webpage"
@@ -98,9 +88,7 @@ references:
   title: "Martini"
   type: "webpage"
   URL: "http://martini.codegangsta.io/"
-  author:
-  - family: Saenz
-    given: Jeremy
+  author: {family: Saenz, given: Jeremy}
   version: "1.0.0"
   accessed: {day: 2, month: 2, year: 2015}
 - id: rails
@@ -108,9 +96,7 @@ references:
   type: "webpage"
   URL: "http://rubyonrails.org/"
   version: "4.2.0"
-  author:
-  - family: Hansson
-    given: David Heinemeier
+  author: {family: Hansson, given: David Heinemeier}
   accessed: {day: 2, month: 2, year: 2015}
 - id: django
   title: "Django"
@@ -125,9 +111,7 @@ references:
   URL: "http://laravel.com/"
   version: "4.2.0"
   accessed: {day: 2, month: 2, year: 2015}
-  author:
-  - family: Otwell
-    given: Taylor
+  author: {family: Otwell, given: Taylor}
 - id: bookshelf
   title: "bookshelf.js"
   type: "webpage"
@@ -182,10 +166,8 @@ references:
   title: Promises/A+
   URL: http://promisesaplus.com/
   author:
-  - family: Cavalier
-    given: Brian
-  - family: Denicola
-    given: Domenic
+  - {family: Cavalier, given: Brian}
+  - {family: Denicola, given: Domenic}
   issued: {day: 6, month: 12, year: 2012}
   accessed: {day: 26, month: 9, year: 2014}
 - id: bluebird
@@ -206,8 +188,7 @@ references:
   type: "webpage"
   URL: "http://opensource.org/licenses"
   accessed: {day: 2, month: 2, year: 2015}
-  abstract: |
-    Open source licenses are licenses that comply with the Open Source Definition — in brief, they allow software to be freely used, modified, and shared. To be approved by the Open Source Initiative (also known as the OSI), a license must go through the Open Source Initiative's license review process.
+  abstract: "Open source licenses are licenses that comply with the Open Source Definition — in brief, they allow software to be freely used, modified, and shared. To be approved by the Open Source Initiative (also known as the OSI), a license must go through the Open Source Initiative's license review process."
 - id: thetvdb
   title: "TheTVDB"
   type: "webpage"
@@ -255,8 +236,7 @@ references:
   type: "article"
   issued: {year: 1999, month: 10, day: 11}
   accessed: {day: 4, month: 2, year: 2015}
-  abstract: |
-    The programming language Common Lisp offers a few functions to support the concept of time as humans experience it, including GET-UNIVERSAL-TIME, ENCODE-UNIVERSAL-TIME, DECODE-UNIVERSAL-TIME, and GET-DECODED-TIME. These functions assume the existence of a timezone and a daylight saving time regime, such that they can support the usual expression of time in the environment in which a small number of real-life applications run. The majority of applications, however, need more support to be able to read and write dates and times, calculate with time, schedule events at specific clock times daily, and work with several time zones and daylight saving time regimes. This paper discusses some of the problems inherent in processing time suitable to humans and describes a solution employed by the author in a number of applications, the LOCAL-TIME concept.
+  abstract: "The programming language Common Lisp offers a few functions to support the concept of time as humans experience it, including GET-UNIVERSAL-TIME, ENCODE-UNIVERSAL-TIME, DECODE-UNIVERSAL-TIME, and GET-DECODED-TIME. These functions assume the existence of a timezone and a daylight saving time regime, such that they can support the usual expression of time in the environment in which a small number of real-life applications run. The majority of applications, however, need more support to be able to read and write dates and times, calculate with time, schedule events at specific clock times daily, and work with several time zones and daylight saving time regimes. This paper discusses some of the problems inherent in processing time suitable to humans and describes a solution employed by the author in a number of applications, the LOCAL-TIME concept."
 - id: cc3-by-us
   title: "Creative Commons Attribution 3.0 United States"
   type: "webpage"
@@ -273,10 +253,8 @@ references:
   title-short: "Relationale Datenbanksysteme"
   title: "Relationale Datenbanksysteme: Eine praktische Einführung"
   author:
-  - family: Kleinschmidt
-    given: Peter
-  - family: Rank
-    given: Christian
+  - {family: Kleinschmidt, given: Peter}
+  - {family: Rank, given: Christian}
   issued: {year: 2005}
   type: book
   publisher: Springer Verlag
@@ -336,10 +314,8 @@ references:
   title: "A study of the characteristics of behaviour driven development"
   container-title: "Software Engineering and Advanced Applications (SEAA), 2011 37th EUROMICRO Conference on"
   author:
-  - family: Solís
-    given: Carlos
-  - family: Wang
-    given: Xiaofeng
+  - {family: Solís, given: Carlos}
+  - {family: Wang, given: Xiaofeng}
   page: '383-387'
   issued: {year: 2011}
   type: paper-conference
@@ -391,7 +367,7 @@ references:
   URL: http://passportjs.org/
 - id: elasticsearch
   title: ElasticSearch
-  type: webpage
+  type: "webpage"
   URL: "https://www.elastic.co/products/elasticsearch"
   version: "1.4.4"
   author:
@@ -400,7 +376,7 @@ references:
   accessed: {day: 16, month: 3, year: 2015}
 - id: lucence
   title: "Apache Lucence"
-  type: webpage
+  type: "webpage"
   URL: "http://lucene.apache.org/"
   version: "5.0.0"
   author: {family: The Apache Software Foundation}
@@ -425,7 +401,7 @@ references:
   type: "webpage"
   title: Reactive-Extensions
   version: "2.4.7"
-  author: {family: Microsoft Open Technologies, Inc.}
+  author: {family: "Microsoft Open Technologies, Inc."}
   accessed: {day: 16, month: 4, year: 2015}
   URL: http://reactivex.io/
 - id: kefir
@@ -435,4 +411,72 @@ references:
   author: {given: Roman, family: Pominov}
   accessed: {day: 16, month: 4, year: 2015}
   URL: https://pozadi.github.io/kefir/
----
+- id: Duden
+  type: "webpage"
+  title: "Duden: Lexem"
+  author: {family: "Bibliographisches Institut GmbH"}
+  accessed: {day: 16, month: 4, year: 2015}
+  URL: "http://www.duden.de/node/704634/revisions/1395925/view"
+- id: cozyical
+  title: "cozy-ical"
+  type: webpage
+  version: "1.1.5"
+  author: {family: Cozy Cloud}
+  URL: https://github.com/mycozycloud/cozy-ical
+  abstract: "Cozy-Ical provides ICal Parser, generators and helpers"
+  keywords: ["ical", "parser", "reader", "generator", "calendar"]
+- id: maier2010deprecating
+  title: "Deprecating the observer pattern"
+  issued: {year: 2010, month: 4, day: 1}
+  author:
+  - given: Ingo
+    family: Maier
+  - given: Tiark
+    family: Rompf
+  - given: Martin
+    family: Odersky
+  URL: "http://infoscience.epfl.ch/record/148043/files/DeprecatingObserversTR2010.pdf"
+  type: report
+  publisher: EPFL
+  genre: EPFL Report
+  number: "148043"
+  accessed: {day: 24, month: 9, year: 2014}
+- id: "ecma6"
+  title: "Draft Specification for ES.next (Ecma-262 Edition 6) (Draft Rev 27)"
+  author: {family: "ECMA International"}
+  URL: "http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_08-24-14-nomarkup.pdf"
+  issued: {year: 2014, month: 8, day: 24}
+  type: "webpage"
+  accessed: {day: 23, month: 9, year: 2014}
+- id: eslint
+  title: "ESLint"
+  type: webpage
+  version: "0.19.0"
+  issued: {year: 2015, month: 4, day: 11}
+  author: {given: "Nicholas C.", family: Zakas}
+  URL: "http://eslint.org/"
+- id: typescript
+  title: "TypeScript"
+  type: webpage
+  version: "1.4.0"
+  issued: {year: 2015, month: 1, day: 13}
+  author: {family: "Microsoft Corp."}
+  URL: "http://www.typescriptlang.org/"
+  accessed: {day: 16, month: 4, year: 2015}
+- id: flow
+  title: "Flow"
+  type: webpage
+  version: "0.8.0"
+  issued: {year: 2015, month: 4, day: 3}
+  author: {family: "Facebook, Inc."}
+  URL: "http://flowtype.org/"
+  accessed: {day: 16, month: 4, year: 2015}
+- id: node-tvdb
+  title: "node-tvdb"
+  type: webpage
+  version: "0.4.13"
+  issued: {year: 2015, month: 4, day: 15}
+  author: {given: Edward, family: Wellbrook}
+  URL: "https://github.com/edwellbrook/node-tvdb"
+  accessed: {day: 16, month: 4, year: 2015}
+...

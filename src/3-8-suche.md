@@ -81,9 +81,9 @@ Beispiel                                                          Ergebnis
 `to_tsquery('english', 'The & Fat & Rats')`                       `'fat' & 'rat'`
 `setweight('fat:2,4 cat:3 rat:5B'::tsvector, 'A')`                `'cat':3A 'fat':2A,4A 'rat':5A`
 `ts_rank(textsearch, query)`                                      `0.818`
-`to_tsvector('fat cats ate rats') @@ to_tsquery('cat & rat')`     `t`
+`to_tsvector('fat cats') @@ to_tsquery('cat')`                    `t`
 
-> – [PostgreSQL Dokumentation zu _Text Search Functions_](http://www.postgresql.org/docs/8.3/static/functions-textsearch.html)
+(Beispiele aus [PostgreSQL Dokumentation zu _Text Search Functions_](http://www.postgresql.org/docs/8.3/static/functions-textsearch.html).)
 
 Die Episoden-Namen und -Beschreibungen werden zu `tsvector` umgewandelt, gewichtet und mit `tsquery` untersucht.
 Was besonders ins Auge fällt, ist dass für die Beschreibungen die Sprache 'english' und für die Titel 'english_nostop' verwendet wurde.
@@ -137,33 +137,20 @@ Da die Serien- und Episoden-Daten zum größten Teil statisch sind, eine niedrig
 
 In diesem Abschnitt behandeln wir unsere Idee für die Suche und deren Umsetzung.
 
-Die Überlegung war es, dass wir im Frontend eine Library benutzen wollen, welche uns ermöglicht die Suchanfragen periodisch oder besser live, also während der Benutzer noch eintippt, zu senden.
+Die Überlegung war es, dass wir im Frontend eine Library benutzen, welche es uns ermöglicht, die Suchanfragen periodisch bzw. live, also während der Benutzer noch eintippt, zu senden.
 
 Wir haben uns mehrere Librarys angeschaut, unter anderem _typeahead.js_ [@typeahead] und _rx.js_ [@rxjs],
-haben uns aber letztendlich für _kefir.js_ [@kefir] entschieden, da dieses sehr kompakt und besonders performant ist.
+haben uns aber letztendlich für _kefir.js_ [@kefir] entschieden, da dieses sehr kompakt und besonders performant ist. Wie _rx.js_ bietet _kefir.js_ eine Implementierung von Event-Streams und ermöglicht durch zahlreiche Hilfsmethoden effiziente, funktional reaktive Programmierung [@maier2010deprecating].
 
 Im wesentlichen sieht das Skript für das Autocompletion-Feature wie folgt aus:
 
-```js
-var inputField = this.refs.queryInput.getDOMNode();
-
+```javascript
 var queries = Kefir.fromEvent(inputField, 'keyup')
 .debounce(250)
-.map(ev => ev.target.value)
-.filter(val => val.length > 0)
+.map(function (ev) { return ev.target.value; })
+.filter(function (val) { return val.length > 0; })
 .skipDuplicates()
-.map(data => {
-  this.transitionTo('search', null, {query: data});
-  var searchQuery = {query: data, limit: this.props.limit}
-
-  return [
-  { type: 'SEARCH_SHOWS_QUERY', data: searchQuery },
-  { type: 'SEARCH_EPISODES_QUERY', data: searchQuery }
-  ];
-  })
-  .flatten();
-
-  Bus.plug(queries);
+.onValue(function (ev) { /* trigger http request for search */ });
 ```
 
 Tippt der Benutzer tippt etwas ein, wird die Suchanfrage als `GET`-Request gesendet und das eingegebene Wort wird mit den Lexemen aus der Materialized View `unique_lexeme` verglichen. Dabei wird das Lexem mit der größten Ähnlichkeit ausgewählt und dieses an die Suche nach der Serie/Episode als Parameter übergeben.
@@ -184,17 +171,18 @@ Der `GET`-Request wird erneut abgeschickt, die Fehlerkorrektur bestimmt, dass da
 `GET`-Request wird abgeschickt, da "mike" und "suit" 2 Wörter sind die durch ein Leerzeichen getrennt sind, aber wir nur 1 Wort an die Fehlerkorrektur übergeben können, wird der Input getrennt und ein Array erzeugt. Zuvor wird die Eingabe jedoch bei jeder Suchanfrage normalisiert.
 Dafür werden unter anderem Leer- und Sonderzeichen durch '+' ersetzt, sodass immer eine gültige Suchanfrage vorliegt.
 
-```js
-function normalize(word){
+```javascript
+function normalize(word) {
   var word = word.toLowerCase()
   .replace("%20","+")
   .replace(/([+])+/g,"+")
   .match(/([A-Za-z0-9+])+/g);
 
-  if ((word === undefined)||(word ==='')||(word === null)){
+  if ((word === undefined) || (word === '') || (word === null)) {
     throw new E.BadRequestError("Please enter a valid search query!");
+  } else {
+    return word.join("+");
   }
-  else return word.join("+");
 }
 ```
 
@@ -202,16 +190,18 @@ Dann wird die normalisierte Eingabe getrennt und ein Array erzeugt. Das Array wi
 
 "mike" und "suits" werden dann zusammengefügt und durch das Zeichen für ein logisches Und getrennt:
 
-```js
+```javascript
 Promise.all(
   input.split('+').map(function (word) { return spellcheck(word); })
-  )
-  .then(function (words) {
-    var query;
-    input = words
-    .filter(function (word) { return word && word[0]; })
-    .map(function (word) { return word[0].word; })
-    .join('&');
+)
+.then(function (words) {
+  var query;
+  input = words
+  .filter(function (word) { return word && word[0]; })
+  .map(function (word) { return word[0].word; })
+  .join('&');
+  // ...
+});
 ```
 
 Als Input wird nun `"mike&suits"` an die Suche übergeben und wir bekommen als relevantestes Ergebnis die Serie "Suits".
