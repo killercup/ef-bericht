@@ -9,7 +9,7 @@ Die wesentlichen Features, die diese bieten sollte sind unter anderem:
 - Gewichtung von Suchergebnissen
 - Rechtschreibkorrektur
 
-Aufgrund der von _PostgreSQL_ zur Verfügung gestellten Funktionen für die Volltextsuche hat sich unsere Entscheidung, eben dieses Datenbanksystem zu benutzen, als richtig erwiesen, da es all die oben genannten Features, aber auch andere nützliche Features, wie z.B. den Support von Fremdsprachen bietet.
+Aufgrund der von _PostgreSQL_ zur Verfügung gestellten Funktionen für die Volltextsuche hat sich unsere Entscheidung, eben dieses Datenbanksystem zu benutzen, als richtig erwiesen, da es all die oben genannten Features, aber auch andere nützliche Funktionen, wie z.B. den Support von Fremdsprachen bietet.
 
 Ein alternatives Systeme für eine dedizierte Volltextsuche ist _ElasticSearch_ [@elasticsearch]. Dies ist ein auf Apache Lucence [@lucence] basierendes NoSQL-System, welches darauf ausgelegt ist, große Mengen an Textdaten zu indexieren und effizient durchsuchbar zu machen.
 
@@ -46,32 +46,26 @@ Im wesentlichen besteht die Suche aus 2 SQL Anfragen, der Rechtschreibkorrektur 
 ### Suche nach Episoden
 
 ```sql
-SELECT 
+SELECT
   shows.name AS show,
   episodes.name AS episode,
   episodes.season, episodes.number, episodes.id, episodes.show_id
 FROM episodes JOIN shows ON shows.id = episodes.show_id
-WHERE 
-  setweight(
-    to_tsvector('english', coalesce(episodes.name, '')), 'A'
-  ) ||
-  setweight(
-    to_tsvector('english', coalesce(episodes.description, '')), 'B')
-  ) @@
-  to_tsquery(input)
-ORDER BY
-  ts_rank(
-    to_tsvector(coalesce(episodes.name,'')) ||
-    to_tsvector(coalesce(episodes.description,'')),
+WHERE
+    to_tsvector('english_nostop', coalesce(episodes.name, '')) ||
+    to_tsvector('english', coalesce(episodes.description, '')) @@
     to_tsquery(input)
-  ) DESC
-LIMIT 10;
+ORDER BY
+    ts_rank((
+      setweight(to_tsvector('english_nostop',coalesce(episodes.name,'')),'A') ||
+      setweight(to_tsvector('english',coalesce(episodes.description,'')),'B')),
+      to_tsquery('english_nostop', input)) DESC
 ```
 
 Wie man sieht wird der Name, die Season, die Episodennummer, sowie der Name und die ID der Serie zurückgegeben. Dafür werden die Tabellen `episodes` und `shows` gejoint.
 Der interessante Teil ist der `WHERE` und `ORDER BY`-Teil, denn dabei werden die Features der _PostgreSQL_-Volltextsuche in Anspruch genommen:
 
-`to_tsvector([ config regconfig , ] document text)` reduziert Text zu einem `tsvector`, der die Lexeme und deren Position innerhalb des Textes enthält. Ein Lexem ist die "Einheit des Wortschatzes, die die begriffliche Bedeutung trägt" [Duden].
+`to_tsvector([ config regconfig , ] document text)` reduziert Text zu einem `tsvector`, der die Lexeme und deren Position innerhalb des Textes enthält. Ein Lexem ist die "Einheit des Wortschatzes, die die begriffliche Bedeutung trägt" [@Duden].
 
 `to_tsquery([ config regconfig , ] query text)` normalisiert Wörter und wird zum durchsuchen des ts_vector benutzt.
 
@@ -79,7 +73,7 @@ Der interessante Teil ist der `WHERE` und `ORDER BY`-Teil, denn dabei werden die
 
 `ts_rank([ weights float4[], ] vector tsvector, query tsquery [, normalization integer ])` gibt dem Query einen Rang.
 
-DEr `@@` Operator überprüft, ob `tsvector` und `tsquery` übereinstimmen und liefert `true` oder `false`.
+Der `@@` Operator überprüft, ob `tsvector` und `tsquery` übereinstimmen und liefert `true` oder `false`.
 
 Beispiel                                                          Ergebnis
 ----------------------------------------------------------------  ----------------------
@@ -89,9 +83,16 @@ Beispiel                                                          Ergebnis
 `ts_rank(textsearch, query)`                                      `0.818`
 `to_tsvector('fat cats ate rats') @@ to_tsquery('cat & rat')`     `t`
 
+> – [PostgreSQL Dokumentation zu _Text Search Functions_](http://www.postgresql.org/docs/8.3/static/functions-textsearch.html)
+
 Die Episoden-Namen und -Beschreibungen werden zu `tsvector` umgewandelt, gewichtet und mit `tsquery` untersucht.
-Anschließend werden die Ergebnisse nach Relevanz absteigend sortiert, sodass das Ergebnis mit dem höchsten Rang als erstes ausgegeben wird.
-`LIMIT 10` beschränkt die Ausgabe auf 10 Ergebnisse.
+Was besonders ins Auge fällt, ist dass für die Beschreibungen die Sprache 'english' und für die Titel 'english_nostop' verwendet wurde.
+Die Sprache 'english_nostop' wurde von uns angelegt und der Unterschied zu 'english' besteht darin, dass Stop Wörter nicht entfernt werden. Dies ist besonders wichtig, da Titel durchaus Stop Wörter enthalten können.
+
+*Beispiel:*
+Wenn man die Serie "Doctor Who" sucht und in die Suche "who" eingibt würde, die Suche die Serie nicht finden, weil "who" ein Stop Wort ist.
+
+Die Ergebnisse der Suche werden abschließend nach Relevanz absteigend sortiert, sodass das Ergebnis mit dem höchsten Rang als erstes ausgegeben wird.
 
 #### Query zur Rechtschreibkorrektur
 
@@ -138,10 +139,35 @@ In diesem Abschnitt behandeln wir unsere Idee für die Suche und deren Umsetzung
 
 Die Überlegung war es, dass wir im Frontend eine Library benutzen wollen, welche uns ermöglicht die Suchanfragen periodisch oder besser live, also während der Benutzer noch eintippt, zu senden.
 
-Wir haben dafür die Library `typeahead.js` ausgesucht, die von Twitter entwickelt wurde und unter einer Open-Source-Lizenz zur Verfügung steht.
+Wir haben uns mehrere Librarys angeschaut, unter anderem _typeahead.js_ [@typeahead] und _rx.js_ [@rxjs],
+haben uns aber letztendlich für _kefir.js_ [@kefir] entschieden, da dieses sehr kompakt und besonders performant ist.
+
+Im wesentlichen sieht das Skript für das Autocompletion-Feature wie folgt aus:
+
+```js
+var inputField = this.refs.queryInput.getDOMNode();
+
+var queries = Kefir.fromEvent(inputField, 'keyup')
+.debounce(250)
+.map(ev => ev.target.value)
+.filter(val => val.length > 0)
+.skipDuplicates()
+.map(data => {
+  this.transitionTo('search', null, {query: data});
+  var searchQuery = {query: data, limit: this.props.limit}
+
+  return [
+  { type: 'SEARCH_SHOWS_QUERY', data: searchQuery },
+  { type: 'SEARCH_EPISODES_QUERY', data: searchQuery }
+  ];
+  })
+  .flatten();
+
+  Bus.plug(queries);
+```
 
 Tippt der Benutzer tippt etwas ein, wird die Suchanfrage als `GET`-Request gesendet und das eingegebene Wort wird mit den Lexemen aus der Materialized View `unique_lexeme` verglichen. Dabei wird das Lexem mit der größten Ähnlichkeit ausgewählt und dieses an die Suche nach der Serie/Episode als Parameter übergeben.
-Anschließend werden die 10 relevantesten Ergebnisse zurückgegeben.
+Anschließend werden die Ergebnisse nach Relevanz sortiert zurückgegeben.
 
 Auf diese Weise haben wir somit alle unsere Anforderungen an die Suche erfüllt: Schnelligkeit, richtige Ergebnisse bei präzisen Anfragen und nach Relevanz sortierte Vorschläge bei unpräzisen Anfragen.
 
@@ -150,22 +176,42 @@ Auf diese Weise haben wir somit alle unsere Anforderungen an die Suche erfüllt:
 
 Wir wollen "Mike", den Namen des Protagonisten aus der Serie "Suits" in die Suche eingeben und ebendiese Serie zurückbekommen.
 
-Wir tippen also "m" ein, der `GET`-Request wird abgeschickt, die Fehlerkorrektur bestimmt das Lexem das die höchste Bewertung für "m" hat z.B. "mia", übergibt es an die Suche und liefert die 10 relevantesten Ergebnisse.
+Wir tippen also "m" ein, der `GET`-Request wird abgeschickt, die Fehlerkorrektur bestimmt das Lexem das die höchste Bewertung für "m" hat z.B. "mia", übergibt es an die Suche und liefert alle relevanten Ergebnisse.
 
 Während die Suche durchgeführt wird, tippen wir aber weiter, sodass wir "mik" in der Suchleiste stehen haben.
 
-Der `GET`-Request wird erneut abgeschickt, die Fehlerkorrektur bestimmt, dass das Lexem mit der höchsten Bewertung für "mik", "mike" ist und gibt es an die Suche weiter. Diese gibt uns wieder die 10 relevantesten Ergebnisse zurück. Wir stellen fest, dass eine andere Serie relevanter ist. Deshalb präzisieren wir unsere Suche und tippen ein "mike suit". `GET`-Request wird abgeschickt, da zwischen "mike" und "suit" ein Leerzeichen ist, aber wir nur 1 Wort an die Fehlerkorrektur übergeben können wird der Input getrennt und ein Array erzeugt:
+Der `GET`-Request wird erneut abgeschickt, die Fehlerkorrektur bestimmt, dass das Lexem mit der höchsten Bewertung für "mik", "mike" ist und gibt es an die Suche weiter. Diese gibt uns wieder alle relevanten Ergebnisse zurück. In diesem Beispiel gehen wir davon aus, dass eine andere Serie relevanter ist. Deshalb präzisieren wir unsere Suche und tippen ein "mike suit".
+`GET`-Request wird abgeschickt, da "mike" und "suit" 2 Wörter sind die durch ein Leerzeichen getrennt sind, aber wir nur 1 Wort an die Fehlerkorrektur übergeben können, wird der Input getrennt und ein Array erzeugt. Zuvor wird die Eingabe jedoch bei jeder Suchanfrage normalisiert.
+Dafür werden unter anderem Leer- und Sonderzeichen durch '+' ersetzt, sodass immer eine gültige Suchanfrage vorliegt.
 
 ```js
-var inputSplit = input.split(' ');
+function normalize(word){
+  var word = word.toLowerCase()
+  .replace("%20","+")
+  .replace(/([+])+/g,"+")
+  .match(/([A-Za-z0-9+])+/g);
+
+  if ((word === undefined)||(word ==='')||(word === null)){
+    throw new E.BadRequestError("Please enter a valid search query!");
+  }
+  else return word.join("+");
+}
 ```
 
-Es wird der letzte Eintrag des Arrays ausgewählt und übergeben ihn an die Rechtschreibkorrektur, diese gibt für "suit", "suits" zurück und speichert es im Array.
+Dann wird die normalisierte Eingabe getrennt und ein Array erzeugt. Das Array wird dann an die Rechtschreibkorrektur übergeben, diese gibt für "suit", "suits" zurück.
 
-"mike" und "suits" werden dann zusammengefügt und durch das Zeichen für ein logisches Oder getrennt:
+"mike" und "suits" werden dann zusammengefügt und durch das Zeichen für ein logisches Und getrennt:
 
+```js
+Promise.all(
+  input.split('+').map(function (word) { return spellcheck(word); })
+  )
+  .then(function (words) {
+    var query;
+    input = words
+    .filter(function (word) { return word && word[0]; })
+    .map(function (word) { return word[0].word; })
+    .join('&');
 ```
-input = input.join('|');
-```
 
-Als Input wird nun `"mike|suits"` an die Suche übergeben und wir bekommen als relevantestes Ergebnis die Serie "Suits".
+Als Input wird nun `"mike&suits"` an die Suche übergeben und wir bekommen als relevantestes Ergebnis die Serie "Suits".

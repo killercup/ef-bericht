@@ -33,7 +33,9 @@ Sobald dieser Link aufgerufen wird, wird der mit dem Token verbundene Account al
 
 ### Login
 
-Ursprünglich wollten wir die Open Source Library _Passport_ [@passport] für die Anmeldung verwenden, doch im Laufe des Projekts haben wir festgestellt, dass dies kaum Vorteile bringt, da wir den größten Teil der Funktionalitäten trotzdem selber schreiben mussten. Deshalb haben wir beschlossen, auf die zusätzliche Abhängigkeit zu verzichten, die Library nicht zu verwenden und stattdessen eine eigene Lösung zu schreiben.
+Ursprünglich wollten wir die Open Source Library _Passport_ [@passport] für die Anmeldung verwenden, doch im Laufe des Projekts haben wir festgestellt, dass dies kaum Vorteile bringt, da wir den größten Teil der Funktionalitäten trotzdem selber schreiben mussten.
+So stellte _Passport_ beispielsweise nur Cookies für Sessions zur Verfügung, sodass wir die Generierung von Session-Tokens selbst schreiben mussten. Selbst für die Überprüfung der Login Daten haben wir festgestellt, dass die Benutzung von _Passport_ keine wesentlichen Vorteile gegenüber einer selbst geschriebenen Lösung bietet und haben deshalb beschlossen, auf die zusätzliche Abhängigkeit zu verzichten, die Library nicht zu verwenden und stattdessen eine eigene Lösung zu schreiben.
+Wäre ein Anmeldung über Soziale Dienste wie _Facebook_ oder _Twitter_ vorgesehen, würde sich eine erneute Betrachtung, der Library unter Umständen lohnen, da _Passport_ dazu eine Schnittstelle bereitstellt. Doch da dies nicht als Feature vorgesehen war, hatte das keinen Einfluss auf unsere Entscheidung.
 
 Die Anmeldung wurde von uns auf folgende Art gelöst.
 
