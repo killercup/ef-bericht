@@ -29,6 +29,7 @@ html:
 	$(APPEND_NEWLINES); \
 	$(PANDOC) $(INPUT_FOLDER)/*.yml $(INPUT_FOLDER)/*.md \
 	--from=$(MARKDOWN_OPTIONS) \
+  --include-before-body=$(LIB_FOLDER)/link-to-pdf.html \
 	--smart --html-q-tags --section-divs \
 	--number-sections --variable numberedSections=true \
 	--self-contained \
